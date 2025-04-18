@@ -1,0 +1,103 @@
+.login-bg {
+    background-color: #f8f9fa; 
+  }
+  
+  .login-card {
+    border: none;
+    border-radius: 10px; 
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  .login-card:hover {
+    transform: translateY(-10px); 
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2); 
+  }
+  
+  .animate-fadeIn {
+    animation: fadeIn 1s ease-in;
+  }
+  
+  .animate-scaleUp {
+    animation: scaleUp 0.5s ease-out;
+  }
+  
+  .animate-bounce {
+    animation: bounce 1.5s infinite;
+  }
+  
+  .login-btn {
+    background-color:#56baed;
+    border: none;
+    color: white;
+    width: 100%; 
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .login-btn:hover {
+    background-color: #469dc9; 
+    transform: scale(1.05);
+    color: #fff;
+  }
+  .input-focus {
+    background-color: #f6f6f6;
+    height:50px;
+    border: none; 
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.3s ease;
+    box-shadow: none !important;
+    transition: all 0.5s ease-in-out;
+    border-radius: 5px 5px 5px 5px;
+  }
+  
+  .input-focus:focus {
+    background-color: #f6f6f6;
+    border-bottom: 2px solid #56baed;
+    outline: none;
+  }
+  
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes scaleUp {
+    from { transform: scale(0.8); }
+    to { transform: scale(1); }
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-15px);
+    }
+    60% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .recaptcha-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .g-recaptcha {
+    transform: scale(0.9);
+    transform-origin: center;
+  }
+  
+  @media (max-width: 480px) {
+    .g-recaptcha {
+      transform: scale(0.8);
+    }
+  }
+  
+  
