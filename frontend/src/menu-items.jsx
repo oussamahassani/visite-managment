@@ -50,7 +50,38 @@ const menuItems = {
             },
           ]
         },
-       
+        {
+          id: 'booking',
+          title: 'Booking',
+          type: 'collapse',
+          icon: 'feather icon-box',
+          children: [
+            {
+              id: 'add-Booking-limit',
+              title: 'Add Booking limit',
+              type: 'item',
+              url: '/booking/bookinglimit'
+            },
+            {
+              id: 'customer-list',
+              title: ' Booking limit List',
+              type: 'item',
+              url: '/booking/bookinglimit-list'
+            },
+            {
+              id: 'add-Booking',
+              title: 'Add Booking ',
+              type: 'item',
+              url: '/booking/booking-create'
+            },
+            {
+              id: 'book-list',
+              title: ' Booking  List',
+              type: 'item',
+              url: '/booking/booking-list'
+            }
+          ]
+        },
         {
           id: 'customer',
           title: 'Customer',

@@ -11,7 +11,6 @@ const AddVehicle = () => {
   const [formData, setFormData] = useState({
     VehicleType: '',
     RegistrationNo: '',
-    UsageType:'',
     Capacity: '',
     FuelType:'',
     Availability: '',
@@ -32,7 +31,6 @@ const AddVehicle = () => {
   
     if (!formData.VehicleType) formErrors.VehicleType = 'VehicleType is required';
     if (!formData.RegistrationNo) formErrors.RegistrationNo = 'RegistrationNo is required';
-    if (!formData.UsageType) formErrors.UsageType = 'Usage Type is required';
     if (!formData.Capacity) formErrors.Capacity = 'Capacity is required';
     if (!formData.FuelType) formErrors.FuelType = 'FuelType is required'
     if (!formData.Availability) formErrors.Availability = 'Availability is required';
@@ -112,19 +110,7 @@ const AddVehicle = () => {
           </div>
           {errors.RegistrationNo && <p className="error">{errors.RegistrationNo}</p>}
         </div>
-        <div className="profile-group">
-          <label htmlFor="UsageType">Usage Type</label>
-          <div className="select-container input-container">
-            <FaToggleOn className="icon" />
-            <select id='UsageType' name='UsageType' value={formData.UsageType}  onChange={handleChange} >
-              <option value="" disabled>-select-</option>
-              <option value="Hourly">Hourly</option>
-              <option value="Trip">Trip</option>
-              <option value="Distance">Distance</option>
-            </select>
-          </div>
-          {errors.UsageType && <p className="error">{errors.UsageType}</p>}
-        </div>
+ 
         <div className="profile-group">
           <label htmlFor="Capacity">Capacity</label>
           <div className="input-container">

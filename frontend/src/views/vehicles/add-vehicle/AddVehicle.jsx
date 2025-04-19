@@ -12,7 +12,6 @@ const AddVehicle = () => {
     VehicleType: '',
     VehicleName: '',
     RegistrationNo: '',
-    UsageType:'',
     Capacity: '',
     FuelType:'',
     Availability: '',
@@ -34,7 +33,6 @@ const AddVehicle = () => {
     if (!formData.VehicleType) formErrors.VehicleType = 'VehicleType is required';
     if (!formData.VehicleName) formErrors.VehicleName = 'VehicleName is required';
     if (!formData.RegistrationNo) formErrors.RegistrationNo = 'RegistrationNo is required';
-    if (!formData.UsageType) formErrors.UsageType = 'Usage Type is required';
     if (!formData.Capacity) formErrors.Capacity = 'Capacity is required';
     if (!formData.FuelType) formErrors.FuelType = 'FuelType is required'
     if (!formData.Availability) formErrors.Availability = 'Availability is required';
@@ -132,19 +130,7 @@ const AddVehicle = () => {
                     {errors.RegistrationNo && <p className="error">{errors.RegistrationNo}</p>}
                  </div>
 
-                <div className="input-box">
-                   <div className="details-container">
-                     <span className="details">Usage Type</span>
-                      <span className="required">*</span>
-                      </div>
-                      <select id='UsageType' name='UsageType' value={formData.UsageType}  onChange={handleChange} >
-                     <option value="" disabled>-select-</option>
-                    <option value="Hourly">Hourly</option>
-                   <option value="Trip">Trip</option>
-                   <option value="Distance">Distance</option>
-                 </select>
-                 {errors.UsageType && <p className="error">{errors.UsageType}</p>}
-                </div>
+          
 
                  <div className="input-box">
                     <div className="details-container">

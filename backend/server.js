@@ -12,6 +12,9 @@ const orderSummaryRoutes = require('./routes/ordersummaryRoutes');
 const countRoutes = require('./routes/countRoutes');
 const notifyRoutes = require('./routes/notifyRoutes.js');
 const userRoutes = require('./routes/userRoutes.js');
+const BookingRoutes = require('./routes/Booking_Route.js');
+const BookingLimitRoutes = require('./routes/BookingLimit_Route.js');
+
 require('./association/association.js'); 
 
 const app = express();
@@ -25,6 +28,8 @@ app.use(cors({
     credentials: true
 }));
 
+app.use('/api/bookinglimits', BookingLimitRoutes);
+app.use('/api/bookings', BookingRoutes);
 app.use('/api', userRoutes);
 app.use('/api', vehicleRoutes);
 app.use('/api', customerRoutes);

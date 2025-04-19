@@ -38,6 +38,11 @@ const renderRoutes = (routes = []) => (
 export const routes = [
   {
     exact: 'true',
+    path: '/home',
+    element: lazy(() => import('./views/home/Home'))
+  },
+  {
+    exact: 'true',
     path: '/auth/signup-1',
     element: lazy(() => import('./views/auth/signup/SignUp1'))
   },
@@ -46,11 +51,7 @@ export const routes = [
     path: '/auth/login',
     element: lazy(() => import('./views/auth/login/Login'))
   },
-  {
-    exact: 'true',
-    path: '/auth/signin-1',
-    element: lazy(() => import('./views/auth/signin/SignIn1'))
-  },
+
   {
     exact: 'true',
     path: '/auth/reset-password-1',
@@ -147,13 +148,32 @@ export const routes = [
         path: '/basic/expense-list',
         element: lazy(() => import('./views/expense/expense-list/ExpenseList'))
       },
-      
+      {
+        exact: 'true',
+        path: '/booking/bookinglimit',
+        element: lazy(() => import('./views/Booking/AddBookingLimit'))
+      },
+      {
+        exact: 'true',
+        path: '/booking/bookinglimit-list',
+        element: lazy(() => import('./views/Booking/BookingLimitDashBoard'))
+      },
+      {
+        exact: 'true',
+        path: '/booking/booking-create',
+        element: lazy(() => import('./views/Booking/CreateBooking'))
+      },
+      {
+        exact: 'true',
+        path: '/booking/booking-list',
+        element: lazy(() => import('./views/Booking/BookingDashBoard'))
+      },
        {
         path: '*',
         exact: 'true',
         element: () => {
           const isAuthenticated = !!localStorage.getItem("authToken");
-          return <Navigate to={isAuthenticated ? '/app/dashboard/analytics' : '/auth/login'} />;
+          return <Navigate to={isAuthenticated ? '/app/dashboard/analytics' : '/home'} />;
         }
       }
     ]

@@ -20,6 +20,7 @@ import "./login.css";
 import { FaLock, FaUser } from "react-icons/fa";
 import axiosInstance from "axiosInstance";
 import ReCAPTCHA from "react-google-recaptcha";
+import { NavLink, Link } from 'react-router-dom';
 
 //const SITE_KEY = "6LdXItcqAAAAAIeP1bGdfIXJ-Ue_WKmiKZ0QI5mZ"; 
 //const SITE_KEY = "6Le9N_QqAAAAAH0tffoPu6mRegYqwSnVxiQczhNy";
@@ -130,6 +131,18 @@ const Login = () => {
                       </CCol>
                     </CRow>
                   </CForm>
+                   <p className="mb-2 text-muted">
+                                  Forgot password?{' '}
+                                  <NavLink to="/auth/reset-password-1" className="f-w-400">
+                                    Reset
+                                  </NavLink>
+                                </p>
+                                <p className="mb-0 text-muted">
+                                  Don’t have an account?{' '}
+                                  <NavLink to="/auth/signup-1" className="f-w-400">
+                                    Signup
+                                  </NavLink>
+                                </p>
                 </CCardBody>
               </CCard>
             </CCardGroup>

@@ -21,11 +21,7 @@ const Vehicle = sequelize.define('Vehicle', {
     unique: true,
     allowNull: false,
   },
-  UsageType: {
-    type: DataTypes.ENUM('Hourly', 'Trip', 'Distance'),
-    allowNull: false,
-    defaultValue: 'Hourly',
-  },
+
   Capacity: {
     type: DataTypes.STRING,
     allowNull: false,
