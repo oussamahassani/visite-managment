@@ -13,7 +13,7 @@ const menuItems = {
           title: 'Dashboard',
           type: 'item',
           icon: 'feather icon-home',
-          url: '/app/dashboard/analytics'
+          url: '/admin/app/dashboard/analytics'
         }
       ]
     },
@@ -34,19 +34,19 @@ const menuItems = {
               id: 'button',
               title: 'Add Vehicles',
               type: 'item',
-              url: '/basic/add-vehicle'
+              url: '/admin/basic/add-vehicle'
             },
             {
               id: 'badges',
               title: 'Vehicle List',
               type: 'item',
-              url: '/basic/vehicles-list'
+              url: '/admin/basic/vehicles-list'
             },
             {
               id: 'overall-details',
               title: 'Overall Details',
               type: 'item',
-              url: '/basic/overall-details'
+              url: '/admin/basic/overall-details'
             },
           ]
         },
@@ -60,25 +60,25 @@ const menuItems = {
               id: 'add-Booking-limit',
               title: 'Add Booking limit',
               type: 'item',
-              url: '/booking/bookinglimit'
+              url: '/admin/booking/bookinglimit'
             },
             {
               id: 'customer-list',
               title: ' Booking limit List',
               type: 'item',
-              url: '/booking/bookinglimit-list'
+              url: '/admin/booking/bookinglimit-list'
             },
             {
               id: 'add-Booking',
               title: 'Add Booking ',
               type: 'item',
-              url: '/booking/booking-create'
+              url: '/admin/booking/booking-create'
             },
             {
               id: 'book-list',
               title: ' Booking  List',
               type: 'item',
-              url: '/booking/booking-list'
+              url: '/admin/booking/booking-list'
             }
           ]
         },
@@ -92,13 +92,13 @@ const menuItems = {
               id: 'add-customer',
               title: 'Add Customer',
               type: 'item',
-              url: '/basic/add-customer'
+              url: '/admin/basic/add-customer'
             },
             {
               id: 'customer-list',
               title: 'Customer List',
               type: 'item',
-              url: '/basic/customers-list'
+              url: '/admin/basic/customers-list'
             }
           ]
         },
@@ -112,13 +112,13 @@ const menuItems = {
               id: 'add-order',
               title: 'Add Order',
               type: 'item',
-              url: '/basic/add-order'
+              url: '/admin/basic/add-order'
             },
             {
               id: 'order-list',
               title: 'Order List',
               type: 'item',
-              url: '/basic/order-list'
+              url: '/admin/basic/order-list'
             }
           ]
         },
@@ -132,21 +132,21 @@ const menuItems = {
               id: 'add-payment',
               title: 'Add Payment',
               type: 'item',
-              url: '/basic/add-payment'
+              url: '/admin/basic/add-payment'
             },
             {
               id: 'orders-payment',
               title: 'Orders Payment',
               type: 'item',
-              url: '/basic/orders-payment'
+              url: '/admin/basic/orders-payment'
             },
             {
               id: 'payment-list',
               title: 'Payment List',
               type: 'item',
-              url: '/basic/payment-list'
+              url: '/admin/basic/payment-list'
             },
-           
+
           ]
         },
 
@@ -160,46 +160,21 @@ const menuItems = {
               id: 'add-expense',
               title: 'Add Expense',
               type: 'item',
-              url: '/basic/add-expense'
+              url: '/admin/basic/add-expense'
             },
             {
               id: 'expense-list',
               title: 'Expense List',
               type: 'item',
-              url: '/basic/expense-list'
+              url: '/admin/basic/expense-list'
             }
           ]
         },
       ]
     },
-    
 
-   
-    // {
-    //   id: 'payment',
-    //   title: 'Payment',
-    //   type: 'group',
-    //   icon: 'icon-support',
-    //   children: [
-    //     {
-    //       id: 'sample-page',
-    //       title: 'Order Wise',
-    //       type: 'item',
-    //       url: '/sample-page',
-    //       classes: 'nav-item',
-    //       icon: 'feather icon-sidebar'
-    //     },
-    //     {
-    //       id: 'customer-wise',
-    //       title: 'Customer Wise',
-    //       type: 'item',
-    //       url:'/sample-rate',
-    //       classes: 'nav-item',
-    //       icon: 'feather icon-sidebar'
-    //     }
 
-    //   ]
-    // },
+
   ]
 };
 

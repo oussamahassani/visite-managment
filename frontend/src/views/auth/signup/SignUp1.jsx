@@ -38,7 +38,7 @@ const SignUp1 = () => {
       console.log("sumbit2")
 
       axiosInstance
-        .post("/register", { ...values, captcha: captchaToken }, { withCredentials: true })
+        .post("/register", { ...values, role: "user", captcha: captchaToken }, { withCredentials: true })
         .then((res) => {
           setLoading(false);
           if (res.data) {
@@ -74,6 +74,12 @@ const SignUp1 = () => {
                     <h4 className="mb-3 f-w-400">Sign up</h4>
                     <div className="input-group mb-3">
                       <input type="text" className="form-control" placeholder="Username" name="username" onChange={handleChange} />
+                    </div>
+                    <div className="input-group mb-3">
+                      <input type="text" className="form-control" placeholder="contact" name="contact" onChange={handleChange} />
+                    </div>
+                    <div className="input-group mb-3">
+                      <input type="text" className="form-control" placeholder="address" name="address" onChange={handleChange} />
                     </div>
                     <div className="input-group mb-3">
                       <input type="email" className="form-control" placeholder="Email address" name="email" onChange={handleChange}

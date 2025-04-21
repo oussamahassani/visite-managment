@@ -55,7 +55,16 @@ const Login = () => {
         setLoading(false);
         if (res.data.login) {
           localStorage.setItem("authToken", res.data.token);
-          navigate("/app/dashboard/analytics");
+          localStorage.setItem("role", res.data.role)
+          localStorage.setItem("user", res.data.user)
+          if (res.data.role == "Admin") {
+
+            navigate("/app/dashboard/analytics");
+          }
+          else {
+
+            navigate("/user/bookingList");
+          }
         } else {
           setError(res.data.message || "Login failed");
         }
@@ -131,18 +140,18 @@ const Login = () => {
                       </CCol>
                     </CRow>
                   </CForm>
-                   <p className="mb-2 text-muted">
-                                  Forgot password?{' '}
-                                  <NavLink to="/auth/reset-password-1" className="f-w-400">
-                                    Reset
-                                  </NavLink>
-                                </p>
-                                <p className="mb-0 text-muted">
-                                  Don’t have an account?{' '}
-                                  <NavLink to="/auth/signup-1" className="f-w-400">
-                                    Signup
-                                  </NavLink>
-                                </p>
+                  <p className="mb-2 text-muted">
+                    Forgot password?{' '}
+                    <NavLink to="/auth/reset-password-1" className="f-w-400">
+                      Reset
+                    </NavLink>
+                  </p>
+                  <p className="mb-0 text-muted">
+                    Don’t have an account?{' '}
+                    <NavLink to="/auth/signup-1" className="f-w-400">
+                      Signup
+                    </NavLink>
+                  </p>
                 </CCardBody>
               </CCard>
             </CCardGroup>

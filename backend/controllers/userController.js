@@ -3,6 +3,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Customer = require('../models/Customer');
+
 const axios = require('axios')
 const nodemailer = require('nodemailer');
 
@@ -17,10 +19,10 @@ let transport = nodemailer.createTransport({
     host: "sandbox.smtp.mailtrap.io",
     port: 2525,
     auth: {
-      user: "44803bfdbba068",
-      pass: "22dc105f11c1e9"
+        user: "44803bfdbba068",
+        pass: "22dc105f11c1e9"
     }
-  });
+});
 exports.verifyToken = (req, res, next) => {
     const token = req.cookies?.accessToken || req.headers.authorization?.split(' ')[1];
     if (!token) return res.status(401).json({ valid: false, message: 'Access denied' });
@@ -43,7 +45,7 @@ exports.verifyToken = (req, res, next) => {
 
 exports.register = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const { username, email, password, contact, address } = req.body;
 
         if (!username || !email || !password) {
             return res.status(400).json({ message: 'All fields are required' });
@@ -53,10 +55,16 @@ exports.register = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: 'Email already exists' });
         }
-
+        let role = "Admin"
+        if (req.body.role) {
+            role = req.body.role;
+        }
         const hashedPassword = await bcrypt.hash(password, saltRounds);
-        await User.create({ username, email, password: hashedPassword });
+        await User.create({ username, email, password: hashedPassword, role });
+        if (role !== "Admin") {
 
+            await Customer.create({ Name: username, Email: email, Contact: contact, Address: address });
+        }
         return res.status(201).json({ status: 'Success', message: 'User registered successfully' });
     } catch (error) {
         console.error(error);
@@ -66,34 +74,34 @@ exports.register = async (req, res) => {
 
 
 exports.fogetpass = async (req, res) => {
-    const {  email } = req.body;
+    const { email } = req.body;
 
-    if ( !email) {
+    if (!email) {
         return res.status(400).json({ message: 'All fields are required' });
     }
-console.log(email)
+    console.log(email)
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
         const hashedPassword = await bcrypt.hash("123456789", saltRounds);
         const existingUsers = await existingUser.update({ password: hashedPassword });
 
-    let mailOptions = {
-        from: '"System" <websitel@gmail.com>',  // sender address
-        to: email,                 // list of receivers
-        subject: 'new password is '    ,
-        text: 'your password is ' +123456789  ,        // plain text body
-      };
-      
-      // Send email
-     transport.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return res.status(200).json({status:false, message: error });
+        let mailOptions = {
+            from: '"System" <websitel@gmail.com>',  // sender address
+            to: email,                 // list of receivers
+            subject: 'new password is ',
+            text: 'your password is ' + 123456789,        // plain text body
+        };
 
-        }
-        console.log('Message sent:', info.response);
-        return res.status(200).json({status:true, message: 'password send' });
+        // Send email
+        transport.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return res.status(200).json({ status: false, message: error });
 
-      });
+            }
+            console.log('Message sent:', info.response);
+            return res.status(200).json({ status: true, message: 'password send' });
+
+        });
     }
     else {
         return res.status(400).json({ message: 'Email not exists' });
@@ -137,7 +145,7 @@ exports.login = async (req, res) => {
             maxAge: 3600000,
         });
 
-        return res.status(200).json({ login: true, token, message: 'Login successful' });
+        return res.status(200).json({ login: true, user: user.id, token, role: user.role, message: 'Login successful' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error during login' });

@@ -34,9 +34,8 @@ const Header = () => {
             <div className="container">
                 <nav className="navbar navbar-expand-lg navbar-light">
                     <Link className="navbar-brand" to="/">
-                        <img src={logo} alt="Service" className="logo" />
-                        <h1 style={{ color: 'red' }}>N</h1>visite Service
-                        
+                        <h1 style={{ color: 'red' }}>T </h1>visite Service
+
                     </Link>
 
                     <ul className="navbar-nav ml-auto">
@@ -46,8 +45,8 @@ const Header = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/cLogin">Login</Link>
                         </li>
-                        
-                       
+
+
                     </ul>
                 </nav>
             </div>

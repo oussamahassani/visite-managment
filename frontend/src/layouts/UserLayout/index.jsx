@@ -1,7 +1,9 @@
 
 
+
+
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom'; 
+import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navigation from './Navigation';
 import NavBar from './NavBar';
@@ -13,7 +15,8 @@ import * as actionType from '../../store/actions';
 import config from 'config';
 import axiosInstance from 'axiosInstance';
 
-const AdminLayout = ({ children }) => {
+const UserLayout = ({ children }) => {
+  console.log("userLayout")
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("authToken"));
   const [sessionExpired, setSessionExpired] = useState(false);
   const navigate = useNavigate();
@@ -61,7 +64,7 @@ const AdminLayout = ({ children }) => {
     if (isAuthenticated) {
       checkSession();
     }
-   }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     const interceptor = axios.interceptors.response.use(
@@ -79,7 +82,7 @@ const AdminLayout = ({ children }) => {
     );
 
     return () => {
-      axios.interceptors.response.eject(interceptor); 
+      axios.interceptors.response.eject(interceptor);
     };
   }, [navigate]);
 
@@ -130,4 +133,4 @@ const AdminLayout = ({ children }) => {
   );
 };
 
-export default AdminLayout;
+export default UserLayout;
