@@ -27,8 +27,14 @@ function BookingDashBoard() {
 
     useEffect(() => {
         setLoading(true);
+        const role = localStorage.getItem("role")
+        const userId = localStorage.getItem("user")
+        const url = "/bookings/"
+        if (role !== "Admin") {
+            url = "/bookings/byuser/" + userId
+        }
         axiosInstance
-            .get('/bookings/')
+            .get(url)
             .then((response) => {
 
                 setBookings(response.data);
@@ -56,42 +62,42 @@ function BookingDashBoard() {
 
     const filteredBooking = bookings.filter(applySearchFilter);
 
-   
+
     return (
         <div >
-                <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                        <div className="input-group">
-                            <input className="form-control" type="text" value={searchQuery} placeholder="Search for..." aria-label="Search for..." onChange={(e) => setSearchQuery(e.target.value)} aria-describedby="btnNavbarSearch" />
-                            <button className="btn btn-primary" id="btnNavbarSearch" onClick={handleSearch} type="button"><i className="fas fa-search"></i></button>
-                        </div>
-                    </form>
+            <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div className="input-group">
+                    <input className="form-control" type="text" value={searchQuery} placeholder="Search for..." aria-label="Search for..." onChange={(e) => setSearchQuery(e.target.value)} aria-describedby="btnNavbarSearch" />
+                    <button className="btn btn-primary" id="btnNavbarSearch" onClick={handleSearch} type="button"><i className="fas fa-search"></i></button>
+                </div>
+            </form>
             <div className="sb-nav-fixed">
-          
+
                 <div id="layoutSidenav">
                     <div id="layoutSidenav_nav">
                         <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                             <div className="sb-sidenav-menu">
                                 <div className="nav-link">
                                     <div className="sb-nav-link-icon">
-                                  
+
                                         <button
                                             onClick={() => { window.location.href = '/booking/adminbooking' }}
-                                            >
+                                        >
                                             Add Booking
                                         </button>
                                         <button
                                             onClick={() => { window.location.href = '/booking/dashboard' }}
-                                            >
+                                        >
                                             All Bookings
                                         </button>
                                         <div
-                                            >
+                                        >
                                             <ReportBookings filteredBooking={filteredBooking} />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                      
+
                         </nav>
                     </div>
                     <div id="layoutSidenav_content">
@@ -148,7 +154,7 @@ function BookingDashBoard() {
                                 </div>
                             </main>
                         )}
-               
+
 
                     </div>
                 </div>
