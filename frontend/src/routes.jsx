@@ -315,6 +315,11 @@ const BookingLimitDashBoard = lazy(() => import('./views/Booking/BookingLimitDas
 const CreateBooking = lazy(() => import('./views/Booking/CreateBooking'));
 const BookingDashBoard = lazy(() => import('./views/Booking/BookingDashBoard'));
 
+
+const AddControleCentre = lazy(() => import('./views/controleCentre/add-controleCentre/AddControleCentre'));
+const ControleCentreList = lazy(() => import('./views/controleCentre/controleCentre-list/ControleCentreList'));
+const UpdateControleCentrevehicle = lazy(() => import('./views/controleCentre/update-controleCentre/UpdateControleCentre'));
+
 export const routes = [
   {
     path: '/',
@@ -420,6 +425,19 @@ export const routes = [
       {
         path: 'booking/booking-list',
         element: <BookingDashBoard />
+      },
+
+      {
+        path: 'controlecenter/add',
+        element: <AddControleCentre />
+      },
+      {
+        path: 'controlecenter/liste',
+        element: <ControleCentreList />
+      },
+      {
+        path: 'controlecenter/update',
+        element: <UpdateControleCentrevehicle />
       },
       {
         path: '',

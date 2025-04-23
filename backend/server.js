@@ -14,22 +14,25 @@ const notifyRoutes = require('./routes/notifyRoutes.js');
 const userRoutes = require('./routes/userRoutes.js');
 const BookingRoutes = require('./routes/Booking_Route.js');
 const BookingLimitRoutes = require('./routes/BookingLimit_Route.js');
+const ControleCenter = require('./routes/centreDeContoleRoutes.js');
 
-require('./association/association.js'); 
+require('./association/association.js');
 
 const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.use(cors({
-    origin: ["http://localhost:3000",'http://localhost:3001','http://localhost:3002','http://localhost:3003', "http://192.168.1.21:3001","http://192.168.1.21:3000"],
-    methods: ['GET', 'POST', 'PUT', 'DELETE','OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
+  origin: ["http://localhost:3000", 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:3003', "http://192.168.1.21:3001", "http://192.168.1.21:3000"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 app.use('/api/bookinglimits', BookingLimitRoutes);
 app.use('/api/bookings', BookingRoutes);
+app.use('/api', ControleCenter);
+
 app.use('/api', userRoutes);
 app.use('/api', vehicleRoutes);
 app.use('/api', customerRoutes);

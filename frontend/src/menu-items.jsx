@@ -26,6 +26,27 @@ const menuItems = {
       children: [
         {
           id: 'component',
+          title: 'ControleCenter',
+          type: 'collapse',
+          icon: 'feather icon-box',
+          children: [
+            {
+              id: 'button',
+              title: 'Add ControleCenter',
+              type: 'item',
+              url: '/admin/controlecenter/add'
+            },
+            {
+              id: 'badges',
+              title: 'ControleCenter List',
+              type: 'item',
+              url: '/admin/controlecenter/liste'
+            },
+
+          ]
+        },
+        {
+          id: 'component',
           title: 'Vehicles',
           type: 'collapse',
           icon: 'feather icon-box',
@@ -104,19 +125,19 @@ const menuItems = {
         },
         {
           id: 'order',
-          title: 'Orders',
+          title: 'Visit',
           type: 'collapse',
           icon: 'feather icon-box',
           children: [
             {
               id: 'add-order',
-              title: 'Add Order',
+              title: 'Add Visit',
               type: 'item',
               url: '/admin/basic/add-order'
             },
             {
               id: 'order-list',
-              title: 'Order List',
+              title: 'Visit List',
               type: 'item',
               url: '/admin/basic/order-list'
             }

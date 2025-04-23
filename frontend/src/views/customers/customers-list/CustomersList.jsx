@@ -17,7 +17,7 @@ const CustomersList = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuId, setMenuId] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [customerIdToUpdate, setCustomerIdToUpdate] = useState(null); 
+  const [customerIdToUpdate, setCustomerIdToUpdate] = useState(null);
   const [customerIdToView, setCustomerIdToView] = useState(null);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [filterRecords, setFilterRecords] = useState([]);
@@ -39,7 +39,7 @@ const CustomersList = () => {
       console.log('Error fetching data', error);
     }
   };
-  
+
   const totalPages = Math.ceil(filterRecords.length / rowsPerPage);
   const indexOfLastRecord = currentPage * rowsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
@@ -49,36 +49,36 @@ const CustomersList = () => {
 
   const handleRowsPerPageChange = (event) => {
     setRowsPerPage(Number(event.target.value));
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const handleUpdateUser = (studentId) => {
-    setCustomerIdToUpdate(studentId);  
-    setIsEditMode(true);  
-    setShowModal(true);  
+    setCustomerIdToUpdate(studentId);
+    setIsEditMode(true);
+    setShowModal(true);
   };
 
   const handleViewPayment = (CustomerID) => {
     setCustomerIdToView(CustomerID);
     setShowPaymentModal(true);
- };
+  };
 
-const handleFilter = (event) => {
-  const filteredData = data.filter((row) =>
-    (row.Name && row.Name.toLowerCase().includes(event.target.value.toLowerCase())) ||
-    (row.Email && row.Email.toLowerCase().includes(event.target.value.toLowerCase())) ||
-    (row.Contact && row.Contact.toLowerCase().includes(event.target.value.toLowerCase())) ||
-    (row.Address && row.Address.toLowerCase().includes(event.target.value.toLowerCase()))
-  );
-  setFilterRecords(filteredData);
-  setCurrentPage(1);
-};
+  const handleFilter = (event) => {
+    const filteredData = data.filter((row) =>
+      (row.Name && row.Name.toLowerCase().includes(event.target.value.toLowerCase())) ||
+      (row.Email && row.Email.toLowerCase().includes(event.target.value.toLowerCase())) ||
+      (row.Contact && row.Contact.toLowerCase().includes(event.target.value.toLowerCase())) ||
+      (row.Address && row.Address.toLowerCase().includes(event.target.value.toLowerCase()))
+    );
+    setFilterRecords(filteredData);
+    setCurrentPage(1);
+  };
 
 
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setCustomerIdToUpdate(null);  
+    setCustomerIdToUpdate(null);
     fetchData();
   };
 
@@ -111,7 +111,7 @@ const handleFilter = (event) => {
             text: "Your file has been deleted.",
             icon: "success"
           });
-          fetchData(); 
+          fetchData();
         } catch (error) {
           console.log(error);
           Swal.fire({
@@ -144,139 +144,139 @@ const handleFilter = (event) => {
         </button>
       </div>
     );
-  };  
+  };
 
   return (
     <div className="table-container">
       <div className="table-header">
         <h3>Customers</h3>
         <div className="search-icon-data">
-          <input type="text" placeholder="Search..." onChange={handleFilter}/>
-          <SearchOutlinedIcon/>
+          <input type="text" placeholder="Search..." onChange={handleFilter} />
+          <SearchOutlinedIcon />
         </div>
-        <Link to='/basic/add-customer'>
+        <Link to='/admin/basic/add-customer'>
           <button className="new-user-btn" >+ New Customer</button>
         </Link>
       </div>
       <div className="table-responsive">
-      <table className="responsive-table">
-        <thead>
-          <tr>
-            <th>SR.NO.</th>
-            <th>Customer Name</th>
-            <th>Email</th>
-            <th>Contact</th>
-            <th>Address</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            currentRecords.length === 0 ? (
-              <tr>
-                <td colSpan='4'>No customers available</td>
-              </tr>
-            ) : (
-              currentRecords.map((customer, index) => (
-                <tr key={index}>
-                  <td>{index+1}</td>
-                  <td>{customer.Name}</td>
-                  <td>{customer.Email}</td>
-                  <td>{customer.Contact}</td>
-                  <td>{customer.Address}</td>
-                   <td>
-                    <button
-                    className="action-button"
-                    onClick={(event) => handleClick(event, customer.CustomerID)}>
-                    Action
-                  </button>
-                    <Menu
-                       id={`action-menu-${customer.CustomerID}`}
-                       anchorEl={anchorEl}
-                       open={menuId === customer.CustomerID}
-                       onClose={(event) => {
-                       if (!showModal && !showPaymentModal) {
-                           handleClose();
-                           }
-                        }}
-                       onClick={(event) => {
-                       event.stopPropagation();
-                         }}
-                    >
-                    <MenuItem
-                        onClick={(event) => {
-                        event.stopPropagation();
-                        handleUpdateUser(customer.CustomerID);
-                        handleClose(); 
-                        }}
-                        style={{ color: 'black' }}
-                        >
-                       Edit
-                    </MenuItem>
-                    <MenuItem
-                       onClick={(event) => {
-                       event.stopPropagation();
-                       handleViewPayment(customer.CustomerID);
-                       handleClose(); 
-                       }}
-                      style={{ color: 'black' }}
-                      >
-                      Payment
-                     </MenuItem>
-                     <MenuItem
-                         onClick={(event) => {
-                         event.stopPropagation();
-                         handleDelete(customer.CustomerID);
-                         handleClose();
-                         }}
-                         style={{ color: 'black' }}
-                         >
-                           Delete
-                      </MenuItem>
-                      </Menu>
-                      </td>
+        <table className="responsive-table">
+          <thead>
+            <tr>
+              <th>SR.NO.</th>
+              <th>Customer Name</th>
+              <th>Email</th>
+              <th>Contact</th>
+              <th>Address</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              currentRecords.length === 0 ? (
+                <tr>
+                  <td colSpan='4'>No customers available</td>
                 </tr>
-              ))
-            )
-          }
-        </tbody>
-      </table>
+              ) : (
+                currentRecords.map((customer, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{customer.Name}</td>
+                    <td>{customer.Email}</td>
+                    <td>{customer.Contact}</td>
+                    <td>{customer.Address}</td>
+                    <td>
+                      <button
+                        className="action-button"
+                        onClick={(event) => handleClick(event, customer.CustomerID)}>
+                        Action
+                      </button>
+                      <Menu
+                        id={`action-menu-${customer.CustomerID}`}
+                        anchorEl={anchorEl}
+                        open={menuId === customer.CustomerID}
+                        onClose={(event) => {
+                          if (!showModal && !showPaymentModal) {
+                            handleClose();
+                          }
+                        }}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                        }}
+                      >
+                        <MenuItem
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            handleUpdateUser(customer.CustomerID);
+                            handleClose();
+                          }}
+                          style={{ color: 'black' }}
+                        >
+                          Edit
+                        </MenuItem>
+                        <MenuItem
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            handleViewPayment(customer.CustomerID);
+                            handleClose();
+                          }}
+                          style={{ color: 'black' }}
+                        >
+                          Payment
+                        </MenuItem>
+                        <MenuItem
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            handleDelete(customer.CustomerID);
+                            handleClose();
+                          }}
+                          style={{ color: 'black' }}
+                        >
+                          Delete
+                        </MenuItem>
+                      </Menu>
+                    </td>
+                  </tr>
+                ))
+              )
+            }
+          </tbody>
+        </table>
       </div>
       <div className="pagination-options-container">
-          <div className="rows-per-page">
-         <label htmlFor="rows-per-page">Rows per page:</label>
-        <select
+        <div className="rows-per-page">
+          <label htmlFor="rows-per-page">Rows per page:</label>
+          <select
             id="rows-per-page"
             value={rowsPerPage}
             onChange={handleRowsPerPageChange}>
-           <option value={5}>5</option>
-           <option value={10}>10</option>
-           <option value={15}>15</option>
-           <option value={15}>20</option>
-           <option value={25}>25</option>
-           <option value={50}>50</option>
-           <option value={100}>100</option>
-           <option value={200}>200</option>
-       </select>
-      </div>
-       <div className="pagination-buttons">
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={15}>15</option>
+            <option value={15}>20</option>
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+            <option value={200}>200</option>
+          </select>
+        </div>
+        <div className="pagination-buttons">
           {renderPagination()}
         </div>
-     </div>
+      </div>
 
-{showModal && isEditMode && (
-   <UpdateCustomer
-     CustomerID={customerIdToUpdate}
-     onClose={handleCloseModal}
-   />
-)}
+      {showModal && isEditMode && (
+        <UpdateCustomer
+          CustomerID={customerIdToUpdate}
+          onClose={handleCloseModal}
+        />
+      )}
 
-{showPaymentModal && (
-   <CustomerPayment
-     CustomerID={customerIdToView}
-     onClose={() => setShowPaymentModal(false)}
-   />
-)}
+      {showPaymentModal && (
+        <CustomerPayment
+          CustomerID={customerIdToView}
+          onClose={() => setShowPaymentModal(false)}
+        />
+      )}
 
     </div>
   );

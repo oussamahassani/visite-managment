@@ -13,7 +13,7 @@
 //     }
 //     return config;
 //   });
-  
+
 // export default axiosInstance;
 
 
@@ -50,7 +50,7 @@ axiosInstance.interceptors.response.use(
 
     if (error.response?.status === 401) {
       localStorage.removeItem('authToken');
-      window.location.href = '/login'; 
+      window.location.href = '/auth/login';
     }
 
     return Promise.reject(error);

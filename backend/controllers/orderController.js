@@ -1,5 +1,5 @@
-const {Op} = require('sequelize');
-const Order = require('../models/Order');
+const { Op } = require('sequelize');
+const Order = require('../models/Visite');
 const OrderPaymentsSummary = require('../models/OrderPaymentSummary');
 const Payment = require('../models/Payment');
 
@@ -21,6 +21,8 @@ exports.addOrder = async (req, res) => {
     DistanceRate,
     TotalAmount,
     Status,
+    Remarque
+
   } = req.body;
 
   try {
@@ -45,6 +47,7 @@ exports.addOrder = async (req, res) => {
       TotalAmount,
       Status,
       OrderNo,
+      Remarque
     });
 
     await OrderPaymentsSummary.create({
@@ -70,48 +73,48 @@ exports.addOrder = async (req, res) => {
 };
 
 
-exports.getOrders = async (req,res) => {
-    try{
-        const orders = await Order.findAll();
-        res.status(200).json(orders);
-    } catch(error){
-        res.status(500).json({
-            error: 'Failed to fetch orders'
-        });
-    }
+exports.getOrders = async (req, res) => {
+  try {
+    const orders = await Order.findAll();
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({
+      error: 'Failed to fetch orders'
+    });
+  }
 };
 
-exports.getOrderById = async(req,res) => {
-    const {OrderID} = req.params;
+exports.getOrderById = async (req, res) => {
+  const { OrderID } = req.params;
 
-    try{
-        const order = await Order.findByPk(OrderID);
-        if(order){
-            res.status(200).json(order);
-        } else {
-            res.status(404).json({ error: 'Order not found'});
-        }
-    } catch(error){
-        res.status(500).json({error:'Failed to fetch order'});
+  try {
+    const order = await Order.findByPk(OrderID);
+    if (order) {
+      res.status(200).json(order);
+    } else {
+      res.status(404).json({ error: 'Order not found' });
     }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch order' });
+  }
 };
 
-exports.updateOrder = async (req,res) => {
-    const {OrderID} = req.params;
-    const { CustomerID, CustomerName, VehicleID,VehicleName, RegistrationNo, StartDate, EndDate, HoursUsed, DistanceCovered, TotalAmount, Status } = req.body;
+exports.updateOrder = async (req, res) => {
+  const { OrderID } = req.params;
+  const { Remarque, CustomerID, CustomerName, VehicleID, VehicleName, RegistrationNo, StartDate, EndDate, HoursUsed, DistanceCovered, TotalAmount, Status } = req.body;
 
-    try{
-        const order = await Order.findByPk(OrderID);
-        if(order){
-            await order.update({ CustomerID, CustomerName,VehicleID,VehicleName, RegistrationNo, StartDate, EndDate, HoursUsed, DistanceCovered, TotalAmount, Status});
-          res.status(200).json(order);
-        } else {
-            res.status(404).json({ error: 'Order not found'});
-        }
+  try {
+    const order = await Order.findByPk(OrderID);
+    if (order) {
+      await order.update({ Remarque, CustomerID, CustomerName, VehicleID, VehicleName, RegistrationNo, StartDate, EndDate, HoursUsed, DistanceCovered, TotalAmount, Status });
+      res.status(200).json(order);
+    } else {
+      res.status(404).json({ error: 'Order not found' });
     }
-    catch(error){
-        res.status(500).json({ error: 'Failde to update customer'});
-    }
+  }
+  catch (error) {
+    res.status(500).json({ error: 'Failde to update customer' });
+  }
 }
 
 exports.getOrdersByCustomer = async (req, res) => {
@@ -141,22 +144,21 @@ exports.getOrdersByCustomer = async (req, res) => {
   }
 };
 
-exports.deleteOrder = async(req,res) => {
-    const {OrderID} = req.params;
-    try{
-        const order = await Order.findByPk(OrderID);
-        if(order){
-            await order.destroy();
-            res.status(200).json({ message:'Order deleted successfully'});
-        } else {
-            res.status(404).json({ error:'Order Not found'});
-        }
-    } catch(error) {
-        res.status(500).json({ error: 'Failed to delete order'});
-        console.log(error)
+exports.deleteOrder = async (req, res) => {
+  const { OrderID } = req.params;
+  try {
+    const order = await Order.findByPk(OrderID);
+    if (order) {
+      await order.destroy();
+      res.status(200).json({ message: 'Order deleted successfully' });
+    } else {
+      res.status(404).json({ error: 'Order Not found' });
     }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete order' });
+    console.log(error)
+  }
 }
 
 
 
-  

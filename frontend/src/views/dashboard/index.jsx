@@ -1,14 +1,14 @@
-import React,{useState,useEffect} from 'react';
-import { Row, Col, Card} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Card } from 'react-bootstrap';
 import Chart from 'react-apexcharts';
 import OrderCard from '../../components/Widgets/Statistic/OrderCard';
 
 import customerChart from './chart/analytics-cuatomer-chart';
 import customerChart1 from './chart/analytics-cuatomer-chart-1';
-import getChartData from './chart/analytics-unique-visitor-chart'; 
+import getChartData from './chart/analytics-unique-visitor-chart';
 
 import axiosInstance from 'axiosInstance';
-import { CButton, CCard, CCardBody, CCardTitle, CCol, CDropdown, CDropdownMenu, CPagination,CDropdownToggle, CDropdownItem , CPaginationItem, CRow, CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from '@coreui/react';
+import { CButton, CCard, CCardBody, CCardTitle, CCol, CDropdown, CDropdownMenu, CPagination, CDropdownToggle, CDropdownItem, CPaginationItem, CRow, CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from '@coreui/react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 
@@ -57,7 +57,7 @@ const DashAnalytics = () => {
         console.error('Error fetching order counts', error);
       }
     };
-    
+
     fetchOrderCounts();
   }, []);
 
@@ -126,42 +126,42 @@ const DashAnalytics = () => {
     fetchVehicleStats();
   }, [timeFilter]);
 
-const fetchVehicleStats = async () => {
-  setLoading(true);
-  try {
-    const response = await axiosInstance.get(`/count/vehicle/all-data?timeFilter=${timeFilter}`);
-    console.log("API Response:", response.data);
-    setData(Array.isArray(response.data) ? response.data : []);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    setData([]);
-  }
-  setLoading(false);
-};
+  const fetchVehicleStats = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get(`/count/vehicle/all-data?timeFilter=${timeFilter}`);
+      console.log("API Response:", response.data);
+      setData(Array.isArray(response.data) ? response.data : []);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setData([]);
+    }
+    setLoading(false);
+  };
 
-useEffect(() => {
+  useEffect(() => {
     const fetchChartData = async () => {
       try {
-        const response = await axiosInstance.get('/count/orders/summary'); 
+        const response = await axiosInstance.get('/count/orders/summary');
         const data = response.data;
 
-        const categories = data.map((item) => item.Month); 
-        const activeOrders = data.map((item) => item.ActiveOrders); 
-        const completedOrders = data.map((item) => item.CompletedOrders); 
+        const categories = data.map((item) => item.Month);
+        const activeOrders = data.map((item) => item.ActiveOrders);
+        const completedOrders = data.map((item) => item.CompletedOrders);
         setChartConfig(getChartData(categories, activeOrders, completedOrders));
       } catch (error) {
         console.error('Error fetching chart data:', error);
       }
     };
-  
+
     fetchChartData();
-  }, []); 
+  }, []);
 
   return (
     <React.Fragment>
       <Row>
         <Col md={6} xl={3}>
-           <OrderCard
+          <OrderCard
             params={{
               title: 'Active Orders',
               class: 'bg-c-blue',
@@ -178,7 +178,7 @@ useEffect(() => {
               title: 'Total Vehicles',
               class: 'bg-c-green',
               icon: 'feather icon-tag',
-              primaryText:totalVehicles.toString(),
+              primaryText: totalVehicles.toString(),
               secondaryText: 'Available Vehicles',
               extraText: availableVehicles.toString(),
             }}
@@ -190,9 +190,9 @@ useEffect(() => {
               title: 'Pending Payment',
               class: 'bg-c-yellow',
               icon: 'feather icon-repeat',
-              primaryText:`₹${totalPendingPayments}`,
+              primaryText: `${totalPendingPayments}`,
               secondaryText: 'This Month',
-              extraText:`₹${pendingPaymentsThisMonth}`,
+              extraText: `${pendingPaymentsThisMonth}`,
             }}
           />
         </Col>
@@ -202,9 +202,9 @@ useEffect(() => {
               title: 'Total Income',
               class: 'bg-c-red',
               icon: 'feather icon-award',
-              primaryText: `₹${totalIncome}`,
+              primaryText: `${totalIncome}`,
               secondaryText: 'Total Expense',
-              extraText: `₹${totalExpense}`
+              extraText: `${totalExpense}`
             }}
           />
         </Col>
@@ -236,7 +236,7 @@ useEffect(() => {
                       </span>
                     </Col>
                   </Row>
-                  <Chart {...customerChart(customerData.paid,customerData.pending)} />
+                  <Chart {...customerChart(customerData.paid, customerData.pending)} />
                   <Row className="mt-3 text-center">
                     <Col>
                       <h3 className="m-0">
@@ -295,122 +295,122 @@ useEffect(() => {
         </Col>
 
         <Col sm={12}>
-        <CCard className="mb-4">
+          <CCard className="mb-4">
             <CCardBody className="p-4">
               <CRow>
                 <CCol>
                   <CCardTitle className="fs-4 fw-semibold">Daily Vehicles Stat</CCardTitle>
                 </CCol>
                 <CCol xs="auto" className="ms-auto">
-                <CDropdown>
-                <CDropdownToggle m='3' color="primary">{timeFilter === 'all' ? 'All Data' : timeFilter}</CDropdownToggle>
-                <CDropdownMenu>
-                  <CDropdownItem onClick={() => setTimeFilter('all')}>All Data</CDropdownItem>
-                  <CDropdownItem onClick={() => setTimeFilter('today')}>Today</CDropdownItem>
-                  <CDropdownItem onClick={() => setTimeFilter('month')}>This Month</CDropdownItem>
-                  <CDropdownItem onClick={() => setTimeFilter('year')}>This Year</CDropdownItem>
-                </CDropdownMenu>
-              </CDropdown>
-                  <Link to='/basic/add-order'>
-                  <CButton color="secondary" className="ms-2">
-                    addNewOrder
-                  </CButton>
+                  <CDropdown>
+                    <CDropdownToggle m='3' color="primary">{timeFilter === 'all' ? 'All Data' : timeFilter}</CDropdownToggle>
+                    <CDropdownMenu>
+                      <CDropdownItem onClick={() => setTimeFilter('all')}>All Data</CDropdownItem>
+                      <CDropdownItem onClick={() => setTimeFilter('today')}>Today</CDropdownItem>
+                      <CDropdownItem onClick={() => setTimeFilter('month')}>This Month</CDropdownItem>
+                      <CDropdownItem onClick={() => setTimeFilter('year')}>This Year</CDropdownItem>
+                    </CDropdownMenu>
+                  </CDropdown>
+                  <Link to='/admin/basic/add-order'>
+                    <CButton color="secondary" className="ms-2">
+                      addNewOrder
+                    </CButton>
                   </Link>
                 </CCol>
               </CRow>
               <div>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <>
-          <CTable align="middle" className="mb-0" hover responsive>
-            <CTableHead className="fw-semibold text-body-secondary">
-              <CTableRow>
-                <CTableHeaderCell>Vehicle Name</CTableHeaderCell>
-                <CTableHeaderCell className="text-center">Vehicle No</CTableHeaderCell>
-                <CTableHeaderCell>Total Hours Used</CTableHeaderCell>
-                <CTableHeaderCell>Total Trips</CTableHeaderCell>
-                <CTableHeaderCell>Total Distance Covered</CTableHeaderCell>
-                <CTableHeaderCell>Total Revenue</CTableHeaderCell>
-                <CTableHeaderCell>Expense Total</CTableHeaderCell>
-                <CTableHeaderCell>Expense Type</CTableHeaderCell>
-                <CTableHeaderCell>Fuel Quantity</CTableHeaderCell>
-                <CTableHeaderCell>Total Paid</CTableHeaderCell>
-                <CTableHeaderCell>Remaining Balance</CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {currentRecords.length > 0 ? (
-                currentRecords.map((item, index) => (
-                  <CTableRow key={index}>
-                    <CTableDataCell>{item.Vehicle ? item.Vehicle.VehicleName : "-"}</CTableDataCell>
-                    <CTableDataCell className="text-center">
-                      {item.Vehicle ? item.Vehicle.RegistrationNo : "-"}
-                    </CTableDataCell>
-                    <CTableDataCell>{item.totalHoursUsed || "-"}</CTableDataCell>
-                    <CTableDataCell>{item.totalTrips || "-"}</CTableDataCell>
-                    <CTableDataCell>{item.totalDistanceCovered || "-"}</CTableDataCell>
-                    <CTableDataCell>{item.totalRevenue}</CTableDataCell>
-                    <CTableDataCell>{item.totalExpense || "-"}</CTableDataCell>
-                    <CTableDataCell>
-                      {item.expenseDetails && item.expenseDetails.length > 0 ? (
-                        item.expenseDetails.map((expense, expIndex) => (
-                          <span key={expIndex}>
-                            {expense.ExpenseType || 0}
-                            {expIndex !== item.expenseDetails.length - 1 ? ", " : ""}
-                          </span>
-                        ))
-                      ) : (
-                        "-"
-                      )}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {item.expenseDetails && item.expenseDetails.length > 0 ? (
-                        item.expenseDetails.map((expense, expIndex) => (
-                          <span key={expIndex}>
-                            {expense.fuelQuantity || 0} liter
-                            {expIndex !== item.expenseDetails.length - 1 ? ", " : ""}
-                          </span>
-                        ))
-                      ) : (
-                        "-"
-                      )}
-                    </CTableDataCell>
-                    <CTableDataCell>{item.totalPaid || 0}</CTableDataCell>
-                    <CTableDataCell>{item.remainingBalance || 0}</CTableDataCell>
-                  </CTableRow>
-                ))
-              ) : (
-                <CTableRow>
-                  <CTableDataCell colSpan="11" style={{color:'red',textAlign:'center'}}>No data available</CTableDataCell>
-                </CTableRow>
-              )}
-            </CTableBody>
-          </CTable>
-          <div className="pagination-controls" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "10px" }}>
-            <div>
-              <label>Rows per page:</label>
-              <select value={rowsPerPage} onChange={(e) => { setRowsPerPage(Number(e.target.value)); setCurrentPage(1); }}>
-                {[5, 10, 15, 20, 25, 50, 100].map((size) => (
-                  <option key={size} value={size}>
-                    {size}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
-                <ChevronLeft />
-              </button>
-              <span> Page {currentPage} of {totalPages} </span>
-              <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages}>
-                <ChevronRight />
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-    </div>
+                {loading ? (
+                  <div>Loading...</div>
+                ) : (
+                  <>
+                    <CTable align="middle" className="mb-0" hover responsive>
+                      <CTableHead className="fw-semibold text-body-secondary">
+                        <CTableRow>
+                          <CTableHeaderCell>Vehicle Name</CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">Vehicle No</CTableHeaderCell>
+                          <CTableHeaderCell>Total Hours Used</CTableHeaderCell>
+                          <CTableHeaderCell>Total Trips</CTableHeaderCell>
+                          <CTableHeaderCell>Total Distance Covered</CTableHeaderCell>
+                          <CTableHeaderCell>Total Revenue</CTableHeaderCell>
+                          <CTableHeaderCell>Expense Total</CTableHeaderCell>
+                          <CTableHeaderCell>Expense Type</CTableHeaderCell>
+                          <CTableHeaderCell>Fuel Quantity</CTableHeaderCell>
+                          <CTableHeaderCell>Total Paid</CTableHeaderCell>
+                          <CTableHeaderCell>Remaining Balance</CTableHeaderCell>
+                        </CTableRow>
+                      </CTableHead>
+                      <CTableBody>
+                        {currentRecords.length > 0 ? (
+                          currentRecords.map((item, index) => (
+                            <CTableRow key={index}>
+                              <CTableDataCell>{item.Vehicle ? item.Vehicle.VehicleName : "-"}</CTableDataCell>
+                              <CTableDataCell className="text-center">
+                                {item.Vehicle ? item.Vehicle.RegistrationNo : "-"}
+                              </CTableDataCell>
+                              <CTableDataCell>{item.totalHoursUsed || "-"}</CTableDataCell>
+                              <CTableDataCell>{item.totalTrips || "-"}</CTableDataCell>
+                              <CTableDataCell>{item.totalDistanceCovered || "-"}</CTableDataCell>
+                              <CTableDataCell>{item.totalRevenue}</CTableDataCell>
+                              <CTableDataCell>{item.totalExpense || "-"}</CTableDataCell>
+                              <CTableDataCell>
+                                {item.expenseDetails && item.expenseDetails.length > 0 ? (
+                                  item.expenseDetails.map((expense, expIndex) => (
+                                    <span key={expIndex}>
+                                      {expense.ExpenseType || 0}
+                                      {expIndex !== item.expenseDetails.length - 1 ? ", " : ""}
+                                    </span>
+                                  ))
+                                ) : (
+                                  "-"
+                                )}
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                {item.expenseDetails && item.expenseDetails.length > 0 ? (
+                                  item.expenseDetails.map((expense, expIndex) => (
+                                    <span key={expIndex}>
+                                      {expense.fuelQuantity || 0} liter
+                                      {expIndex !== item.expenseDetails.length - 1 ? ", " : ""}
+                                    </span>
+                                  ))
+                                ) : (
+                                  "-"
+                                )}
+                              </CTableDataCell>
+                              <CTableDataCell>{item.totalPaid || 0}</CTableDataCell>
+                              <CTableDataCell>{item.remainingBalance || 0}</CTableDataCell>
+                            </CTableRow>
+                          ))
+                        ) : (
+                          <CTableRow>
+                            <CTableDataCell colSpan="11" style={{ color: 'red', textAlign: 'center' }}>No data available</CTableDataCell>
+                          </CTableRow>
+                        )}
+                      </CTableBody>
+                    </CTable>
+                    <div className="pagination-controls" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "10px" }}>
+                      <div>
+                        <label>Rows per page:</label>
+                        <select value={rowsPerPage} onChange={(e) => { setRowsPerPage(Number(e.target.value)); setCurrentPage(1); }}>
+                          {[5, 10, 15, 20, 25, 50, 100].map((size) => (
+                            <option key={size} value={size}>
+                              {size}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
+                          <ChevronLeft />
+                        </button>
+                        <span> Page {currentPage} of {totalPages} </span>
+                        <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages}>
+                          <ChevronRight />
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
             </CCardBody>
           </CCard>
         </Col>

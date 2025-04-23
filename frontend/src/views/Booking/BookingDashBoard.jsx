@@ -78,22 +78,21 @@ function BookingDashBoard() {
                         <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                             <div className="sb-sidenav-menu">
                                 <div className="nav-link">
-                                    <div className="sb-nav-link-icon">
+                                    <div className="d-flex  justify-content-around">
 
-                                        <button
-                                            onClick={() => { window.location.href = '/booking/adminbooking' }}
+                                        <button className='btn '
+                                            onClick={() => { window.location.href = '/admin/booking/booking-create' }}
                                         >
                                             Add Booking
                                         </button>
-                                        <button
-                                            onClick={() => { window.location.href = '/booking/dashboard' }}
+                                        <button className='btn btn-primary'
+                                            onClick={() => { window.location.href = '/admin/booking/booking-list' }}
                                         >
                                             All Bookings
                                         </button>
-                                        <div
-                                        >
-                                            <ReportBookings filteredBooking={filteredBooking} />
-                                        </div>
+
+                                        <ReportBookings filteredBooking={filteredBooking} />
+
                                     </div>
                                 </div>
                             </div>

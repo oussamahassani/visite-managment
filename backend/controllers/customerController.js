@@ -8,7 +8,7 @@ exports.addCustomer = async (req, res) => {
     const customer = await Customer.create({ Name, Email, Contact, Address });
     res.status(201).json(customer);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to create customer',error });
+    res.status(500).json({ error: 'Failed to create customer', error });
   }
 };
 
@@ -17,11 +17,26 @@ exports.getCustomers = async (req, res) => {
   try {
     const customers = await Customer.findAll();
     ({
-      order: [['createdAt', 'ASC']], 
+      order: [['createdAt', 'ASC']],
     })
     res.status(200).json(customers);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch customers' });
+  }
+};
+
+exports.getCustomerByEmail = async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    const customer = await Customer.findOne({ where: { email: email } });
+    if (customer) {
+      res.status(200).json(customer);
+    } else {
+      res.status(404).json({ error: 'Customer not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch customer' });
   }
 };
 
@@ -53,7 +68,7 @@ exports.updateCustomer = async (req, res) => {
       res.status(404).json({ error: 'Customer not found' });
     }
   } catch (error) {
-    res.status(500).json({ error: 'Failed to update customer',error });
+    res.status(500).json({ error: 'Failed to update customer', error });
   }
 };
 

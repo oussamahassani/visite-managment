@@ -70,7 +70,6 @@ const SignUp1 = () => {
               <Col>
                 <CForm onSubmit={handleSubmit}>
                   <Card.Body className="card-body">
-                    <img src={logoDark} alt="" className="img-fluid mb-4" />
                     <h4 className="mb-3 f-w-400">Sign up</h4>
                     <div className="input-group mb-3">
                       <input type="text" className="form-control" placeholder="Username" name="username" onChange={handleChange} />

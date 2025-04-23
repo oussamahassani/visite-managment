@@ -133,7 +133,7 @@ const AddPayment = () => {
         icon: 'success',
         confirmButtonText: 'OK',
       });
-      navigate('/basic/payment-list');
+      navigate('/admin/basic/payment-list');
     } catch (error) {
       Swal.fire({
         title: 'Error!',
@@ -146,7 +146,7 @@ const AddPayment = () => {
 
   return (
     <div className="profile-container">
-      <div className="close-icon" onClick={() => navigate('/basic/payment-list')}>
+      <div className="close-icon" onClick={() => navigate('/admin/basic/payment-list')}>
         <FaTimes />
       </div>
       <h3 className="form-title">Add Payment</h3>
@@ -172,7 +172,7 @@ const AddPayment = () => {
           </div>
           {errors.CustomerName && <p className="error">{errors.CustomerName}</p>}
         </div>
-<div className="profile-group">
+        <div className="profile-group">
           <label htmlFor="OrderID">Order No</label>
           <div className="select-container input-container">
             <FaClipboardList className="icon" />
@@ -183,7 +183,7 @@ const AddPayment = () => {
               required
             >
               <option value="" disabled>Select Order</option>
-             {ordersList.map((order) => (
+              {ordersList.map((order) => (
                 <option key={order.OrderID} value={order.OrderID}>
                   Order {order.OrderNo}
                 </option>

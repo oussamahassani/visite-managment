@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const Order = require('./Order');
+const Order = require('./Visite');
 const { v4: uuidv4 } = require('uuid');
 
 const Payment = sequelize.define('Payment', {
@@ -14,45 +14,39 @@ const Payment = sequelize.define('Payment', {
     allowNull: false,
     references: {
       model: Order,
-      key: 'OrderID',      
+      key: 'OrderID',
     },
   },
-  CustomerID:{
-    type:DataTypes.UUID,
-    allowNull:false,
+  CustomerID: {
+    type: DataTypes.UUID,
+    allowNull: false,
   },
-  CustomerName:{
+  CustomerName: {
     type: DataTypes.STRING,
-    allowNull:false,
- },
- OrderNo:{
-  type: DataTypes.INTEGER,
-  allowNull: false,
- },
- TotalAmount: {
-  type: DataTypes.FLOAT,
-  allowNull: false,
-},
-AmountPaid: {
+    allowNull: false,
+  },
+  OrderNo: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  TotalAmount: {
     type: DataTypes.FLOAT,
     allowNull: false,
-},
-PaymentMethod: {
-  type: DataTypes.STRING,
-  allowNull: false,
-},
+  },
+
+  PaymentMethod: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   PaymentDate: {
     type: DataTypes.DATE,
     allowNull: false,
   },
-  RemainingBalance: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
+
   Status: {
     type: DataTypes.STRING,
-    defaultValue:'Paid',
-    allowNull:false,
+    defaultValue: 'Paid',
+    allowNull: false,
   }
 });
 Payment.belongsTo(Order, { foreignKey: 'OrderID', as: 'Order' });

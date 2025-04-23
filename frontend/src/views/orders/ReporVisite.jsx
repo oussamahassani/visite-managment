@@ -7,13 +7,13 @@ export default function ReportBookings({ filteredBooking }) {
     const doc = new jspdf();
     const tableColumn = [
       "Number",
-      "BookingID",
       "CustomerName",
-      "VehicleType",
-      "VehicleNumber",
-      "ContactNumber",
-      "Email",
-      "BookingDate",
+      "OrderNo",
+      "VehicleName",
+      "RegistrationNo",
+      "Status",
+      "StartDate",
+      "EndDate",
     ];
     const tableRows = [];
 
@@ -21,15 +21,17 @@ export default function ReportBookings({ filteredBooking }) {
       .slice(0)
       .reverse()
       .map((booking, index) => {
-        const bookingDate = new Date(booking.Booking_Date).toLocaleDateString();
+        const bookingDate = new Date(booking.EndDate).toLocaleDateString();
+        const StartDate = new Date(booking.StartDate).toLocaleDateString();
+
         const data = [
           index + 1,
-          booking.Booking_Id,
-          booking.Customer_Name,
-          booking.Vehicle_Type,
-          booking.Vehicle_Number,
-          booking.Contact_Number,
-          booking.Email,
+          booking.CustomerName,
+          booking.OrderNo,
+          booking.VehicleName,
+          booking.RegistrationNo,
+          booking.Status,
+          StartDate,
           bookingDate
         ];
         tableRows.push(data);
@@ -44,7 +46,7 @@ export default function ReportBookings({ filteredBooking }) {
     doc.text("Transport visite", 60, 15);
 
     doc.setFont("helvetica", "normal").setFontSize(20).setTextColor(0, 0, 0);
-    doc.text("Booking Details Report", 65, 25);
+    doc.text("Visit  Details Report", 65, 25);
 
     doc.setFont("times", "normal").setFontSize(15).setTextColor(100, 100, 100);
     doc.text(`Report Generated Date: ${dateStr}`, 65, 35);

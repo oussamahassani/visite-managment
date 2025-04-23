@@ -112,11 +112,11 @@ const Specification = (props) => {
 
                                                 <h5 style={{}}><span className="align-top">Expiors on {pkg.exp}</span></h5>
                                             )}
-                                            <br/>
+                                            <br />
                                             {pkg.exp && (
                                                 <div>
-                                                <p>Remaining :</p>
-                                                <p className="card-title pricing-card-title" style={{background:"red", color:"black", padding:"5px", borderRadius:"10px", fontSize:"30px"}}> {getRemainingTime(pkg.exp).days}<span className="align-top">days</span> , {getRemainingTime(pkg.exp).hours} <span className="align-top">H</span>, {getRemainingTime(pkg.exp).minutes} <span className="align-top">Min</span></p>
+                                                    <p>Remaining :</p>
+                                                    <p className="card-title pricing-card-title" style={{ background: "red", color: "black", padding: "5px", borderRadius: "10px", fontSize: "30px" }}> {getRemainingTime(pkg.exp).days}<span className="align-top">days</span> , {getRemainingTime(pkg.exp).hours} <span className="align-top">H</span>, {getRemainingTime(pkg.exp).minutes} <span className="align-top">Min</span></p>
                                                 </div>
                                             )}
                                             <p>{pkg.pkgdescription}</p>
@@ -131,7 +131,7 @@ const Specification = (props) => {
                                             </ul>
                                             <div className="read-more " style={{ position: "absolute", bottom: "0", marginBottom: "10px" }}>
                                                 {props.usr ? (<Link to={`/create/${props.usr}`} className="btn btn-style btn-outline-primary"> Make Appointment</Link>) :
-                                                    (<Link to={`/cLogin`} className="btn btn-style btn-outline-primary"> Make Appointment</Link>)
+                                                    (<Link to={`/auth/login`} className="btn btn-style btn-outline-primary"> Make Appointment</Link>)
                                                 }
                                             </div>
                                         </div>

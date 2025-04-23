@@ -11,7 +11,7 @@ function BookingLimitDashBoard() {
     const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const componentRef = useRef();
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const handleSearch = async () => {
         setLoading(true);
@@ -50,31 +50,31 @@ function BookingLimitDashBoard() {
             bookinglimit.Booking_Limit.toString().includes(searchQuery)
         );
     };
-    
+
 
     const filteredBooking = bookinglimits.filter(applySearchFilter);
 
-     const handleDeleteBooking = (id) => {
-       setLoading(true);
-       axiosInstance
-         .delete(`/bookinglimits/${id}`)
-         .then(() => {
-           setLoading(false);
-           alert('Successfully deleted');
-          // navigate('/booking/bookinglimit-list');
-           window.location.reload(false)
-         })
-         .catch((error) => {
-           setLoading(false);
-           alert('An error happened. Please Check Console for more information');
-           console.log(error);
-         });
-     };
+    const handleDeleteBooking = (id) => {
+        setLoading(true);
+        axiosInstance
+            .delete(`/bookinglimits/${id}`)
+            .then(() => {
+                setLoading(false);
+                alert('Successfully deleted');
+                // navigate('/booking/bookinglimit-list');
+                window.location.reload(false)
+            })
+            .catch((error) => {
+                setLoading(false);
+                alert('An error happened. Please Check Console for more information');
+                console.log(error);
+            });
+    };
 
     return (
         <div >
             <div className="sb-nav-fixed">
-      
+
                 <div id="layoutSidenav">
                     <div id="layoutSidenav_nav">
                         <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -82,19 +82,19 @@ function BookingLimitDashBoard() {
                                 <div className="nav-link">
                                     <div className="sb-nav-link-icon">
                                         <button
-                                            onClick={() => { window.location.href = '/booking/bookinglimit' }} className='btn btn-success'
-                                            >
+                                            onClick={() => { window.location.href = '/admin/booking/bookinglimit' }} className='btn btn-success'
+                                        >
                                             Add Booking Limit
                                         </button>
                                         <button
-                                            onClick={() => { window.location.href = '/booking/dashboard' }} className='btn btn-primary'
-                                            >
+                                            onClick={() => { window.location.href = '/admin/booking/booking-list' }} className='btn btn-primary'
+                                        >
                                             All Bookings
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                  
+
                         </nav>
                     </div>
                     <div id="layoutSidenav_content">
@@ -114,7 +114,7 @@ function BookingLimitDashBoard() {
                                                 <tbody>
                                                     {filteredBooking.map((bookinglimit) => (
                                                         <tr key={bookinglimit.id} className='h-8'>
-                                                            
+
                                                             <td >{bookinglimit.Booking_Date.slice(0, 10)}</td>
                                                             <td >{bookinglimit.Booking_Limit}</td>
                                                             <td >
@@ -122,9 +122,9 @@ function BookingLimitDashBoard() {
                                                                     <Link to={`/booking/updatelimit/${bookinglimit._id}`}>
                                                                         <AiOutlineEdit className='text-2x1 text-yellow-600' />
                                                                     </Link>
-                                                                    
-                                                                        <MdOutlineDelete className='text-2x1 text-red-600'  onClick={() =>handleDeleteBooking(bookinglimit.id)}/>
-                                                                    
+
+                                                                    <MdOutlineDelete className='text-2x1 text-red-600' onClick={() => handleDeleteBooking(bookinglimit.id)} />
+
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -136,7 +136,7 @@ function BookingLimitDashBoard() {
                                 </div>
                             </main>
                         )}
-             
+
 
                     </div>
                 </div>

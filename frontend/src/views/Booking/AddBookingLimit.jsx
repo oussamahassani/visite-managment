@@ -13,7 +13,7 @@ const AddBookingLimit = () => {
 
 
     const handleSaveLimit = () => {
-        if (!Booking_Date || !Booking_Limit ) {
+        if (!Booking_Date || !Booking_Limit) {
             alert("All fields are required.");
             return;
         }
@@ -28,7 +28,7 @@ const AddBookingLimit = () => {
             .then(() => {
                 setLoading(false);
                 alert('Booking limit added successfully.');
-                navigate('/booking/bookinglimitdashboard');
+                navigate('/admin/booking/bookinglimit-list');
             })
             .catch((error) => {
                 setLoading(false);
@@ -40,36 +40,36 @@ const AddBookingLimit = () => {
     const today = new Date().toISOString().split('T')[0];
 
     return (
-        <div>  
-      <div style={styles.container}>
-            <div style={styles.formContainer}>
-                <h1 style={styles.heading}>Create Booking </h1>
-                <div style={styles.underline}></div>
-                {loading ? <Spinner /> : ''}
-                <div style={styles.form}>
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Select Date</label>
-                        <input
-                            type='date'
-                            value={Booking_Date}
-                            onChange={(e) => setBooking_Date(e.target.value)}
-                            min={today}
-                            style={styles.input}
-                        />
+        <div>
+            <div style={styles.container}>
+                <div style={styles.formContainer}>
+                    <h1 style={styles.heading}>Create Booking </h1>
+                    <div style={styles.underline}></div>
+                    {loading ? <Spinner /> : ''}
+                    <div style={styles.form}>
+                        <div style={styles.inputGroup}>
+                            <label style={styles.label}>Select Date</label>
+                            <input
+                                type='date'
+                                value={Booking_Date}
+                                onChange={(e) => setBooking_Date(e.target.value)}
+                                min={today}
+                                style={styles.input}
+                            />
+                        </div>
+                        <div style={styles.inputGroup}>
+                            <label style={styles.label}>Booking Limit</label>
+                            <input
+                                type='Number'
+                                value={Booking_Limit}
+                                onChange={(e) => setBooking_Limit(e.target.value)}
+                                style={styles.input}
+                            />
+                        </div>
+                        <button onClick={handleSaveLimit} style={styles.button}>Save Limit</button>
                     </div>
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Booking Limit</label>
-                        <input
-                            type='Number'
-                            value={Booking_Limit}
-                            onChange={(e) => setBooking_Limit(e.target.value)}
-                            style={styles.input}
-                        />
-                    </div>
-                    <button onClick={handleSaveLimit} style={styles.button}>Save Limit</button>
                 </div>
             </div>
-        </div>
         </div>
     );
 };
@@ -79,7 +79,6 @@ const styles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '100vh',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     },
@@ -106,7 +105,7 @@ const styles = {
         padding: '10px',
         border: '1px solid rgba(255, 255, 255, 0.2)',
         borderRadius: '20px',
-        
+
     },
     heading: {
         fontSize: '3rem',
@@ -121,20 +120,20 @@ const styles = {
         borderRadius: '5px',
         border: '2px solid #ccc',
         backgroundColor: 'white',
+        display: 'flex',
     },
     label: {
         fontWeight: 'bold',
         marginBottom: '0.5rem',
         flexDirection: 'column',
         fontSize: '1.2rem',
-        color: 'red',
+
         textAlign: 'center',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         padding: '10px',
         display: 'block',
-        textTransform: 'uppercase',
     },
     input: {
         padding: '8px',

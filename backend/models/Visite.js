@@ -1,10 +1,10 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 const { v4: uuidv4 } = require('uuid');
-const Customer = require('./Customer'); 
+const Customer = require('./Customer');
 const Vehicle = require('./vehicle');
 
-const Order = sequelize.define('Order', {
+const Order = sequelize.define('Visite', {
   OrderID: {
     type: DataTypes.UUID,
     defaultValue: uuidv4,
@@ -38,10 +38,7 @@ const Order = sequelize.define('Order', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  UsageType: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+
   StartDate: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -50,33 +47,14 @@ const Order = sequelize.define('Order', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  HoursUsed: {
+
+  Remarque: {
     type: DataTypes.STRING,
-    allowNull: true,
-  },
-  HourlyRate: {
-    type: DataTypes.FLOAT,
-    allowNull: true,
-  },
-  TotalTrip: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-  },
-  TripRate: {
-    type: DataTypes.FLOAT,
-    allowNull: true,
-  },
-  DistanceCovered: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  DistanceRate: {
-    type: DataTypes.FLOAT,
     allowNull: true,
   },
   TotalAmount: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
+    type: DataTypes.STRING,
+
   },
   Status: {
     type: DataTypes.STRING,

@@ -34,5 +34,9 @@ const Vehicle = sequelize.define('Vehicle', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  cusID: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  }
 });
 module.exports = Vehicle;

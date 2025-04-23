@@ -8,13 +8,13 @@ const router = express.Router();
 
 
 let transporter = nodemailer.createTransport({
-    host: "sandbox.smtp.mailtrap.io",
-    port: 2525,
-    auth: {
-      user: "44803bfdbba068",
-      pass: "22dc105f11c1e9"
-    }
-  });
+  host: "sandbox.smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "44803bfdbba068",
+    pass: "22dc105f11c1e9"
+  }
+});
 
 // Send confirmation email
 const sendBookingConfirmationEmail = (customerEmail, bookingDetails) => {
@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
     const {
       cusID, Booking_Date, Customer_Name, Vehicle_Type,
       Vehicle_Number, Contact_Number, Email,
-      selectedPackage, selectedServices
+      selectedPackage, selectedServices, Center_Name
     } = req.body;
 
     if (!Customer_Name || !Vehicle_Type || !Vehicle_Number || !Contact_Number || !Email) {
@@ -69,7 +69,7 @@ router.post('/', async (req, res) => {
       Contact_Number,
       Email,
       selectedPackage,
-      selectedServices
+      NameCenter: Center_Name
     });
 
     sendBookingConfirmationEmail(Email, req.body);
@@ -110,7 +110,21 @@ router.get('/:identifier', async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 });
+router.get('/byuser/:identifier', async (req, res) => {
+  try {
+    const { identifier } = req.params;
 
+
+
+    const byCUSID = await Booking.findAll({ where: { cusID: identifier } });
+    res.status(200).json(byCUSID);
+
+
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
 // Update booking
 router.put('/:id', async (req, res) => {
   try {

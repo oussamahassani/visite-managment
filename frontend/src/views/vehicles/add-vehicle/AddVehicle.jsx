@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../../css/form.css';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -13,9 +13,12 @@ const AddVehicle = () => {
     VehicleName: '',
     RegistrationNo: '',
     Capacity: '',
-    FuelType:'',
+    FuelType: '',
     Availability: '',
+
   });
+  const [cussID, setcussID] = useState('');
+  const [cusID, setcusID] = useState(localStorage.getItem("email"));
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -26,33 +29,51 @@ const AddVehicle = () => {
     setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
   };
 
+  useEffect(() => {
+    axiosInstance.get(`/customers/byemail/${cusID}`)
+      .then((response) => {
+        const data = response.data;
+        setcussID(data.CustomerID);
+
+      })
+      .catch((error) => {
+        alert(`An error happened. Please check console`);
+        console.log(error);
+      });
+  }, [cusID]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let formErrors = {};
-  
+
     if (!formData.VehicleType) formErrors.VehicleType = 'VehicleType is required';
     if (!formData.VehicleName) formErrors.VehicleName = 'VehicleName is required';
     if (!formData.RegistrationNo) formErrors.RegistrationNo = 'RegistrationNo is required';
     if (!formData.Capacity) formErrors.Capacity = 'Capacity is required';
     if (!formData.FuelType) formErrors.FuelType = 'FuelType is required'
     if (!formData.Availability) formErrors.Availability = 'Availability is required';
-    
-    
-  
+
+
+
+    setFormData((prevData) => ({ ...prevData, cusID: cussID }))
+    console.log(cussID)
+
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
       return;
     }
-  
+
     try {
-      const response = await axiosInstance.post('/vehicles',formData);
+      console.log(formData)
+
+      const response = await axiosInstance.post('/vehicles', formData);
       Swal.fire({
         title: 'Success!',
         text: response.data.message,
         icon: 'success',
         confirmButtonText: 'OK',
       });
-     navigate('/basic/vehicles-list');
+      navigate('/admin/basic/vehicles-list');
     } catch (error) {
       console.error("Error details:", error);
       if (error.response && error.response.status === 400) {
@@ -72,119 +93,119 @@ const AddVehicle = () => {
       }
     }
   };
-  
+
   return (
-    
+
     <div>
-    <div className="top-label">
-       <h4>Add New Vehicle</h4>
-  </div>
-  <div className='form-container'>
-    <div className="page-header">
-        <form onSubmit={handleSubmit}>
+      <div className="top-label">
+        <h4>Add New Vehicle</h4>
+      </div>
+      <div className='form-container'>
+        <div className="page-header">
+          <form onSubmit={handleSubmit}>
             <h2>Please Enter Valid data</h2>
             <hr></hr>
             <br></br>
             <div className="user-details">
-             <div className="input-box">
-                   <div className="details-container">
-                     <span className="details">Vehicle Type</span>
-                      <span className="required">*</span>
-                      </div>
-                      <input
+              <div className="input-box">
+                <div className="details-container">
+                  <span className="details">Vehicle Type</span>
+                  <span className="required">*</span>
+                </div>
+                <input
                   type="text"
                   id="VehicleType"
                   name="VehicleType"
                   value={formData.VehicleType}
                   onChange={handleChange}
-               />
-               {errors.VehicleType && <p className="error">{errors.VehicleType}</p>}
+                />
+                {errors.VehicleType && <p className="error">{errors.VehicleType}</p>}
               </div>
               <div className="input-box">
-                   <div className="details-container">
-                     <span className="details">Vehicle Name</span>
-                      <span className="required">*</span>
-                   </div>
-                  <input
+                <div className="details-container">
+                  <span className="details">Vehicle Name</span>
+                  <span className="required">*</span>
+                </div>
+                <input
                   type="text"
                   id="VehicleName"
                   name="VehicleName"
                   value={formData.VehicleName}
                   onChange={handleChange}
-               />
-               {errors.VehicleName && <p className="error">{errors.VehicleName}</p>}
+                />
+                {errors.VehicleName && <p className="error">{errors.VehicleName}</p>}
               </div>
-                <div className="input-box">
-                   <div className="details-container">
-                     <span className="details">Registration NO</span>
-                      <span className="required">*</span>
-                      </div>
-                      <input
-                       type="text"
-                       id="RegistrationNo"
-                       name="RegistrationNo"
-                       value={formData.RegistrationNo}
-                       onChange={handleChange}
-                      placeholder="Enter vehicle number"
-                       />
-                    {errors.RegistrationNo && <p className="error">{errors.RegistrationNo}</p>}
-                 </div>
+              <div className="input-box">
+                <div className="details-container">
+                  <span className="details">Registration NO</span>
+                  <span className="required">*</span>
+                </div>
+                <input
+                  type="text"
+                  id="RegistrationNo"
+                  name="RegistrationNo"
+                  value={formData.RegistrationNo}
+                  onChange={handleChange}
+                  placeholder="Enter vehicle number"
+                />
+                {errors.RegistrationNo && <p className="error">{errors.RegistrationNo}</p>}
+              </div>
 
-          
 
-                 <div className="input-box">
-                    <div className="details-container">
-                        <span className="details">Capacity</span>
-                        <span className="required">*</span>
-                    </div>
-                    <input
-                      type="text"
-                      id="Capacity"
-                      name="Capacity"
-                      value={formData.Capacity}
-                      onChange={handleChange}
-                  />
-                    {errors.Capacity && <p className="error">{errors.Capacity}</p>}
-                  </div>
 
-                  <div className="input-box">
-                    <div className="details-container">
-                        <span className="details">Availability</span>
-                        <span className="required">*</span>
-                    </div>
-                    <select id='Availability' name='Availability' value={formData.Availability}  onChange={handleChange} >
-              <option value="" disabled>select availability</option>
-              <option value="Available">Available</option>
-              <option value="Unavailable">Unavailable</option>
-            </select>
-            {errors.Availability && <p className="error">{errors.Availability}</p>}
+              <div className="input-box">
+                <div className="details-container">
+                  <span className="details">Capacity</span>
+                  <span className="required">*</span>
+                </div>
+                <input
+                  type="text"
+                  id="Capacity"
+                  name="Capacity"
+                  value={formData.Capacity}
+                  onChange={handleChange}
+                />
+                {errors.Capacity && <p className="error">{errors.Capacity}</p>}
+              </div>
+
+              <div className="input-box">
+                <div className="details-container">
+                  <span className="details">Availability</span>
+                  <span className="required">*</span>
+                </div>
+                <select id='Availability' name='Availability' value={formData.Availability} onChange={handleChange} >
+                  <option value="" disabled>select availability</option>
+                  <option value="Available">Available</option>
+                  <option value="Unavailable">Unavailable</option>
+                </select>
+                {errors.Availability && <p className="error">{errors.Availability}</p>}
+              </div>
+
+              <div className="input-box">
+                <div className="details-container">
+                  <span className="details">Fuel Type</span>
+                  <span className="required">*</span>
+                </div>
+                <input
+                  type="text"
+                  id="FuelType"
+                  name="FuelType"
+                  value={formData.FuelType}
+                  onChange={handleChange}
+                  placeholder="e.g,Petrol,Disel"
+                />
+                {errors.FuelType && <p className="error">{errors.FuelType}</p>}
+              </div>
             </div>
-            
-                   <div className="input-box">
-                    <div className="details-container">
-                        <span className="details">Fuel Type</span>
-                        <span className="required">*</span>
-                    </div>
-                    <input
-                      type="text"
-                      id="FuelType"
-                      name="FuelType"
-                      value={formData.FuelType}
-                      onChange={handleChange}
-                      placeholder="e.g,Petrol,Disel"
-                   />
-                   {errors.FuelType && <p className="error">{errors.FuelType}</p>}
-                  </div>
-               </div>
-             <hr></hr>
+            <hr></hr>
             <div className="button-row">
-                <button type="submit" className="simple-button primary-button" title="Save Data">Save</button>
-                <button type="button" className="simple-button secondary-button" title='Go InstallmentList' onClick={() => navigate('/basic/vehicles-list')}>Cancel</button>
+              <button type="submit" className="simple-button primary-button" title="Save Data">Save</button>
+              <button type="button" className="simple-button secondary-button" title='Go InstallmentList' onClick={() => navigate('/admin/basic/vehicles-list')}>Cancel</button>
             </div>
-        </form>
-    
-    </div>
-    </div>
+          </form>
+
+        </div>
+      </div>
     </div>
   );
 };

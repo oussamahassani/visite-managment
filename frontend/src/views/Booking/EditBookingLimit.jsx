@@ -38,8 +38,8 @@ export default function EditBookingLimit() {
 
   const handleSaveBookingLimit = () => {
     const data = {
-        Booking_Date,
-        Booking_Limit
+      Booking_Date,
+      Booking_Limit
 
     };
 
@@ -65,7 +65,7 @@ export default function EditBookingLimit() {
   return (
     <div style={styles.container}>
       <div style={styles.formContainer}>
-        <BackButton destination='/booking/bookinglimitdashboard' />
+        <BackButton destination='/admin/booking/bookinglimit-list' />
         <h1 style={styles.heading}>Edit Booking Limits</h1>
         {loading ? <Spinner /> : ''}
         <div style={styles.form}>
@@ -99,7 +99,7 @@ export default function EditBookingLimit() {
 
 };
 const styles = {
-  
+
   container: {
     display: 'flex',
     justifyContent: 'center',

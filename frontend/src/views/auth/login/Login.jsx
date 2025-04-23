@@ -57,9 +57,11 @@ const Login = () => {
           localStorage.setItem("authToken", res.data.token);
           localStorage.setItem("role", res.data.role)
           localStorage.setItem("user", res.data.user)
+          localStorage.setItem("email", res.data.email)
+
           if (res.data.role == "Admin") {
 
-            navigate("/app/dashboard/analytics");
+            navigate("/admin/app/dashboard/analytics");
           }
           else {
 

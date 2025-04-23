@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import axiosInstance from 'axiosInstance';
 
 
-const VehiclesList = () => {
+const ControleCentreList = () => {
   const [data, setData] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuId, setMenuId] = useState(null);
@@ -22,12 +22,9 @@ const VehiclesList = () => {
 
   const fetchData = async () => {
     try {
-      const role = localStorage.getItem("role")
-      const userId = localStorage.getItem("user")
-      const url = "/vehicles"
-      if (role !== "Admin") {
-        url = "/vehicles/byuser/" + userId
-      }
+
+      const url = "/centres"
+
       const response = await axiosInstance.get(url);
       setData(response.data);
       setFilterRecords(response.data);
@@ -84,7 +81,7 @@ const VehiclesList = () => {
       if (result.isConfirmed) {
         try {
           // await axios.delete(`${config.baseURL}/vehicles/${VehicleID}`);
-          await axiosInstance.delete(`/vehicles/${VehicleID}`);
+          await axiosInstance.delete(`/getCentersById/${VehicleID}`);
           setData(data.filter((vehicle) => vehicle.VehicleID !== VehicleID));
           fetchData();
           Swal.fire({
@@ -104,31 +101,8 @@ const VehiclesList = () => {
     });
   };
 
-  const handleStatusUpdate = async (VehicleID, currentStatus) => {
-    const newStatus = currentStatus === "Available" ? "Unavailable" : "Available";
 
-    try {
-      await axiosInstance.put(`/vehicles/availability/${VehicleID}`, { Availability: newStatus });
-      setData((prevData) =>
-        prevData.map((vehicle) =>
-          vehicle.VehicleID === VehicleID ? { ...vehicle, Availability: newStatus } : vehicle
-        )
-      );
-      fetchData();
-      Swal.fire({
-        title: "Updated!",
-        text: `Status changed to ${newStatus}.`,
-        icon: "success"
-      });
-    } catch (error) {
-      console.error("Error updating status:", error);
-      Swal.fire({
-        title: "Error!",
-        text: "Something went wrong while updating status.",
-        icon: "error"
-      });
-    }
-  };
+
 
   const renderPagination = () => {
     return (
@@ -155,13 +129,13 @@ const VehiclesList = () => {
   return (
     <div className="table-container">
       <div className="table-header">
-        <h3>Vehicles</h3>
+        <h3>Controle Centre List</h3>
         <div className="search-icon-data">
           <input type="text" placeholder="Search..." onChange={handleFilter} />
           <SearchOutlinedIcon />
         </div>
         <Link to='/basic/add-vehicle'>
-          <button className="new-user-btn" >+ New Vehicle</button>
+          <button className="new-user-btn" >+ New Center</button>
         </Link>
       </div>
       <div className="table-responsive">
@@ -169,13 +143,9 @@ const VehiclesList = () => {
           <thead>
             <tr>
               <th>SR.NO</th>
-              <th>Vehicle Type</th>
-              <th>Vehicle Name</th>
-              <th>Registration NO</th>
-              <th>Usage Type</th>
-              <th>Capacity</th>
-              <th>Fuel Type</th>
-              <th>Availability</th>
+              <th>Telephone</th>
+              <th> Name</th>
+
               <th>Action</th>
             </tr>
           </thead>
@@ -189,38 +159,26 @@ const VehiclesList = () => {
                 currentRecords.map((vehicle, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{vehicle.VehicleType}</td>
-                    <td>{vehicle.VehicleName}</td>
-                    <td>{vehicle.RegistrationNo}</td>
-                    <td>{vehicle.UsageType}</td>
-                    <td>{vehicle.Capacity}</td>
-                    <td>{vehicle.FuelType}</td>
-                    <td>
-                      <span className={`status-text ${vehicle.Availability}`}>{vehicle.Availability}</span>
-                    </td>
+                    <td>{vehicle.Telephone}</td>
+                    <td>{vehicle.Name}</td>
+
+
                     <td>
                       <button
                         className="action-button"
-                        onClick={(event) => handleClick(event, vehicle.VehicleID)}>
+                        onClick={(event) => handleClick(event, vehicle.controleCenter)}>
                         Action
                       </button>
                       <Menu
-                        id={`action-menu-${vehicle.VehicleID}`}
+                        id={`action-menu-${vehicle.controleCenter}`}
                         anchorEl={anchorEl}
-                        open={menuId === vehicle.VehicleID}
+                        open={menuId === vehicle.controleCenter}
                         onClose={handleClose}>
-                        <Link to={`/vehicles/update-vehicle/${vehicle.VehicleID}`}>
+                        <Link to={`/admin/controlecenter/update/${vehicle.controleCenter}`}>
                           <MenuItem style={{ color: 'black' }}>Edit</MenuItem>
                         </Link>
-                        <MenuItem
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            handleStatusUpdate(vehicle.VehicleID, vehicle.Availability);
-                            handleClose();
-                          }}
 
-                        > {vehicle.Availability === "Available" ? "Mark as Unavailable" : "Mark as Available"}</MenuItem>
-                        <MenuItem onClick={() => handleDelete(vehicle.VehicleID)}>Delete</MenuItem>
+                        <MenuItem onClick={() => handleDelete(vehicle.controleCenter)}>Delete</MenuItem>
                       </Menu>
                     </td>
                   </tr>
@@ -255,4 +213,4 @@ const VehiclesList = () => {
   );
 };
 
-export default VehiclesList;
+export default ControleCentreList;

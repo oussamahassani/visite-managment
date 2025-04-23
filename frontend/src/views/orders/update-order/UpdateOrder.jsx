@@ -7,27 +7,28 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from 'axiosInstance';
 const UpdateOrder = () => {
   const [inputData, setInputData] = useState({
-    CustomerID:'',
-    CustomerName:'',
-    VehicleName:'',
-    VehicleID:'',
-    RegistrationNo:'',
-    StartDate:'',
-    EndDate:'',
-    HoursUsed:'',
-    HourlyRate:'',
-    TotalTrip:'',
-    TripRate:'',
-    DistanceCovered:'',
-    DistanceRate:'',
-    TotalAmount:'',
-    Status:'',
+    CustomerID: '',
+    CustomerName: '',
+    VehicleName: '',
+    VehicleID: '',
+    RegistrationNo: '',
+    StartDate: '',
+    EndDate: '',
+    HoursUsed: '',
+    HourlyRate: '',
+    TotalTrip: '',
+    TripRate: '',
+    DistanceCovered: '',
+    DistanceRate: '',
+    TotalAmount: '',
+    Status: '',
+    Remarque: ''
   })
 
-  const [customerList, setCustomerList] = useState([]); 
+  const [customerList, setCustomerList] = useState([]);
   const [vehiclesList, setVehiclesList] = useState([]);
   const navigate = useNavigate();
-  const {OrderID} = useParams();
+  const { OrderID } = useParams();
 
 
   useEffect(() => {
@@ -36,19 +37,19 @@ const UpdateOrder = () => {
     fetchOrderData();
   }, [OrderID])
 
- 
-    const fetchOrderData = async () => {
-      try {
-        // const response = await axios.get(`${config.baseURL}/orders/${OrderID}`);
-        const response = await axiosInstance.get(`/orders/${OrderID}`);
-        console.log('Fetched data:', response.data);
-        if (response.data) {
-            setInputData(response.data);
-          }
-      } catch (error) {
-        console.error('Error fetching customer data:', error);
+
+  const fetchOrderData = async () => {
+    try {
+      // const response = await axios.get(`${config.baseURL}/orders/${OrderID}`);
+      const response = await axiosInstance.get(`/orders/${OrderID}`);
+      console.log('Fetched data:', response.data);
+      if (response.data) {
+        setInputData(response.data);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching customer data:', error);
+    }
+  };
 
   const fetchCustomerName = async () => {
     try {
@@ -86,24 +87,11 @@ const UpdateOrder = () => {
       });
     }
   };
-  
-  const calculateTotalAmount = () => {
-    let totalAmount = 0;
 
-    if (inputData.UsageType === 'Hourly' && inputData.HoursUsed && inputData.HourlyRate) {
-      totalAmount = parseFloat(inputData.HoursUsed) * parseFloat(inputData.HourlyRate);
-    } else if (inputData.UsageType === 'Trip' && inputData.TotalTrip && inputData.TripRate) {
-      totalAmount = parseFloat(inputData.TotalTrip) * parseFloat(inputData.TripRate);
-    } else if (inputData.UsageType === 'Distance' && inputData.DistanceCovered && inputData.DistanceRate) {
-      totalAmount = parseFloat(inputData.DistanceCovered) * parseFloat(inputData.DistanceRate);
-    }
-
-    setInputData({ ...inputData, TotalAmount: totalAmount.toFixed(2) });
-  };
 
 
   useEffect(() => {
-    calculateTotalAmount();
+
   }, [inputData.HoursUsed, inputData.HourlyRate, inputData.TotalTrip, inputData.TripRate, inputData.DistanceCovered, inputData.DistanceRate, inputData.UsageType]);
 
   const handleSubmit = async (event) => {
@@ -111,7 +99,7 @@ const UpdateOrder = () => {
     try {
       // await axios.put(`${config.baseURL}/orders/${OrderID}`, inputData);
       await axiosInstance.put(`/orders/${OrderID}`, inputData);
-        const Toast = Swal.mixin({
+      const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
         showConfirmButton: false,
@@ -127,186 +115,140 @@ const UpdateOrder = () => {
         icon: "success",
         title: "Data Saved Successfully!"
       });
-      navigate("/basic/order-list"); 
+      navigate("/admin/basic/order-list");
     } catch (error) {
       console.error('Error adding order data:', error);
     }
   };
-  const handleCancel = () => (navigate('/basic/order-list'));
+  const handleCancel = () => (navigate('/admin/basic/order-list'));
   return (
-     <div>
-        <div className="top-label">
-           <h4>Add New Order</h4>
+    <div>
+      <div className="top-label">
+        <h4>Update  visite</h4>
       </div>
       <div className='form-container'>
         <div className="page-header">
-            <form onSubmit={handleSubmit}>
-                <h2>Please Enter Valid data</h2>
-                <hr></hr>
-                <br></br>
-                <div className="user-details">
-      
-                  <div className="input-box">
-  <div className="details-container">
-    <span className="details">Customer Name</span>
-    <span className="required">*</span>
-  </div>
-  <select
-    name="CustomerName"
-    value={inputData.CustomerName}
-    onChange={(e) => {
-      const selectedName = e.target.value;
-      const selectedCustomer = customerList.find((customer) => customer.Name === selectedName);
-      setInputData({
-        ...inputData,
-        CustomerName: selectedName,
-        CustomerID: selectedCustomer ? selectedCustomer.CustomerID : '',
-      });
-    }}
-    required
-  >
-    <option value="">Select Customer</option>
-    {customerList.map((customer) => (
-      <option key={customer.CustomerId} value={customer.Name}>
-        {customer.Name}
-      </option>
-    ))}
-  </select>
-</div>
-<div className="input-box">
-                       <div className="details-container">
-                         <span className="details">Vehicle Name</span>
-                          <span className="required">*</span>
-                          </div>
-                          <select
-    name="VehicleName"
-    value={inputData.VehicleName}
-    onChange={handleVehicleChange}
-    required
-  >
-    <option value="">Select Vehicle Name</option>
-    {vehiclesList.map((vehicle) => (
-      <option key={vehicle.vehicleId} value={vehicle.VehicleName}>
-        {vehicle.VehicleName}
-      </option>
-    ))}
-  </select>
-                  </div>
+          <form onSubmit={handleSubmit}>
+            <h2>Please Enter Valid data</h2>
+            <hr></hr>
+            <br></br>
+            <div className="user-details">
 
-
-                  <div className="input-box">
-                       <div className="details-container">
-                         <span className="details">Registration NO</span>
-                          <span className="required">*</span>
-                          </div>
-                          <input type="text" name="RegistrationNo" value={inputData.RegistrationNo} readOnly />
-                  </div>
-
-                    <div className="input-box">
-                       <div className="details-container">
-                         <span className="details">Start Date</span>
-                          <span className="required">*</span>
-                          </div>
-                          <input type="date" name="StartDate" value={inputData.StartDate} onChange={e => setInputData({...inputData,StartDate:e.target.value})} required />
-                    </div>
-
-                    <div className="input-box">
-                       <div className="details-container">
-                         <span className="details">End Date</span>
-                          <span className="required">*</span>
-                          </div>
-                          <input type="date" name="EndDate" value={inputData.EndDate} onChange={e => setInputData({...inputData,EndDate:e.target.value})}required />
-                    </div>
-
-                    { inputData.UsageType === 'Hourly' && (
-                    <>
-                     <div className="input-box">
-                        <div className="details-container">
-                            <span className="details">Hours Used</span>
-                            <span className="required">*</span>
-                        </div>
-                        <input type="text" name="HoursUsed" value={inputData.HoursUsed} onChange={e => setInputData({...inputData,HoursUsed:e.target.value})}required />
-                      </div>
-
-                      <div className="input-box">
-                        <div className="details-container">
-                            <span className="details">Hourly Rate</span>
-                            <span className="required">*</span>
-                        </div>
-                        <input type="text" name="HourlyRate"value={inputData.HourlyRate} onChange={e => setInputData({...inputData,HourlyRate:e.target.value})}required />
-                      </div>
-                    </>
-                   )}
-                
-                   { inputData.UsageType === 'Trip' && (
-                    <>
-                       <div className="input-box">
-                        <div className="details-container">
-                            <span className="details">Total Trip</span>
-                            <span className="required">*</span>
-                        </div>
-                        <input type='text' name="TotalTrip" value={inputData.TotalTrip} onChange={e => setInputData({...inputData,TotalTrip: e.target.value})} required />
-                      </div>
-                      
-                      <div className="input-box">
-                        <div className="details-container">
-                            <span className="details">Trip Rate</span>
-                            <span className="required">*</span>
-                        </div>
-                        <input type="text" name="TripRate" value={inputData.TripRate} onChange={e => setInputData({...inputData,TripRate:e.target.value})}required />
-                      </div>
-                    </>
-                   )}
-                    
-                    {inputData.UsageType === 'Distance' && (
-                      <>
-                        <div className="input-box">
-                        <div className="details-container">
-                            <span className="details">Distance Covered</span>
-                            <span className="required">*</span>
-                        </div>
-                        <input type='text' name="DistanceCovered" value={inputData.DistanceCovered} onChange={e => setInputData({...inputData,DistanceCovered: e.target.value})} required />
-                      </div>
-
-                      <div className="input-box">
-                        <div className="details-container">
-                            <span className="details">Distance Rate</span>
-                            <span className="required">*</span>
-                        </div>
-                        <input type='text' name="DistanceRate" value={inputData.DistanceRate} onChange={e => setInputData({...inputData,DistanceRate: e.target.value})} required />
-                      </div>
-                      </>
-                    )}
-                      <div className="input-box">
-                        <div className="details-container">
-                            <span className="details">Total Amount</span>
-                            <span className="required">*</span>
-                        </div>
-                        <input type="text" name="TotalAmount" value={inputData.TotalAmount} onChange={e => setInputData({...inputData,TotalAmount:e.target.value})}required />
-                      </div>
-
-                      <div className="input-box">
-                        <div className="details-container">
-                            <span className="details">Status</span>
-                            <span className="required">*</span>
-                        </div>
-                        <select name='Status' value={inputData.Status} onChange={e => setInputData({...inputData, Status: e.target.value})}>
-                          <option value="" disabled>-Select-</option>
-                          <option value="Active">Active</option>
-                          <option value="Completed">Completed</option>
-                        </select>
-                      </div>
-                   </div>
-                 <hr></hr>
-                <div className="button-row">
-                    <button type="submit" className="simple-button primary-button" title="Save Data">Save</button>
-                    <button type="button" className="simple-button secondary-button" title='Go InstallmentList' onClick={handleCancel}>Cancel</button>
+              <div className="input-box">
+                <div className="details-container">
+                  <span className="details">Customer Name</span>
+                  <span className="required">*</span>
                 </div>
-            </form>
+                <select
+                  name="CustomerName"
+                  value={inputData.CustomerName}
+                  onChange={(e) => {
+                    const selectedName = e.target.value;
+                    const selectedCustomer = customerList.find((customer) => customer.Name === selectedName);
+                    setInputData({
+                      ...inputData,
+                      CustomerName: selectedName,
+                      CustomerID: selectedCustomer ? selectedCustomer.CustomerID : '',
+                    });
+                  }}
+                  required
+                >
+                  <option value="">Select Customer</option>
+                  {customerList.map((customer) => (
+                    <option key={customer.CustomerId} value={customer.Name}>
+                      {customer.Name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="input-box">
+                <div className="details-container">
+                  <span className="details">Vehicle Name</span>
+                  <span className="required">*</span>
+                </div>
+                <select
+                  name="VehicleName"
+                  value={inputData.VehicleName}
+                  onChange={handleVehicleChange}
+                  required
+                >
+                  <option value="">Select Vehicle Name</option>
+                  {vehiclesList.map((vehicle) => (
+                    <option key={vehicle.vehicleId} value={vehicle.VehicleName}>
+                      {vehicle.VehicleName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+
+              <div className="input-box">
+                <div className="details-container">
+                  <span className="details">Registration NO</span>
+                  <span className="required">*</span>
+                </div>
+                <input type="text" name="RegistrationNo" value={inputData.RegistrationNo} readOnly />
+              </div>
+
+              <div className="input-box">
+                <div className="details-container">
+                  <span className="details">Start Date</span>
+                  <span className="required">*</span>
+                </div>
+                <input type="date" name="StartDate" value={inputData.StartDate} onChange={e => setInputData({ ...inputData, StartDate: e.target.value })} required />
+              </div>
+
+              <div className="input-box">
+                <div className="details-container">
+                  <span className="details">End Date</span>
+                  <span className="required">*</span>
+                </div>
+                <input type="date" name="EndDate" value={inputData.EndDate} onChange={e => setInputData({ ...inputData, EndDate: e.target.value })} required />
+              </div>
+
+
+
+
+
+              <div className="input-box">
+                <div className="details-container">
+                  <span className="details">Total Amount</span>
+                  <span className="required">*</span>
+                </div>
+                <input type="text" name="TotalAmount" value={inputData.TotalAmount} onChange={e => setInputData({ ...inputData, TotalAmount: e.target.value })} required />
+              </div>
+
+              <div className="input-box">
+                <div className="details-container">
+                  <span className="details">Status</span>
+                  <span className="required">*</span>
+                </div>
+                <select name='Status' value={inputData.Status} onChange={e => setInputData({ ...inputData, Status: e.target.value })}>
+                  <option value="" disabled>-Select-</option>
+                  <option value="Active">Active</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+              <div className="input-box">
+                <div className="details-container">
+                  <span className="details">observation</span>
+                  <span className="required">*</span>
+                </div>
+                <input type="text" name="Remarque"
+                  value={inputData.Remarque}
+                  onChange={e => setInputData({ ...inputData, Remarque: e.target.value })} />
+              </div>
+            </div>
+            <hr></hr>
+            <div className="button-row">
+              <button type="submit" className="simple-button primary-button" title="Save Data">Save</button>
+              <button type="button" className="simple-button secondary-button" title='Go InstallmentList' onClick={handleCancel}>Cancel</button>
+            </div>
+          </form>
         </div>
-        </div>
-        </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default UpdateOrder;

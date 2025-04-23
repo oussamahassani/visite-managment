@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from "axiosInstance";
 import { useNavigate, useParams } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
+import Swal from 'sweetalert2';
 
 
 const CreateBooking = () => {
     const [bookings, setBookings] = useState([]);
+    const [data, setData] = useState([]);
+
     const [maxBookingLimit, setMaxBookingLimit] = useState('');
     const [bookingCount, setBookingCount] = useState('');
     const [Booking_Date, setBooking_Date] = useState('');
@@ -14,16 +17,20 @@ const CreateBooking = () => {
     const [Vehicle_Type, setVehicle_Type] = useState('');
     const [Vehicle_Number, setVehicle_Number] = useState('');
     const [Contact_Number, setContact_Number] = useState('');
+    const [Center_Name, setCenter_Name] = useState('');
+
     const [Email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-let cusID = localStorage.getItem("cusID")
+    const [cusID, setcusID] = useState(localStorage.getItem("email"));
+
+
     const [userData, setUserData] = useState({});
-    
+
     const calculateBookingCount = () => {
         // Format the selected date to match the format in the database
         const formattedSelectedDate = new Date(Booking_Date).toISOString();
-    
+
         // Filter bookings based on the formatted selected date
         const selectedDateBookings = bookings.filter(booking => {
             // Format each booking date to match the format in the database
@@ -31,12 +38,24 @@ let cusID = localStorage.getItem("cusID")
             // Check if the formatted booking date matches the formatted selected date
             return formattedBookingDate.startsWith(formattedSelectedDate.slice(0, 10)); // Compare only date part
         });
-    
+
         setBookingCount(selectedDateBookings.length);
     };
+    const fetchDataCenter = async () => {
+        try {
 
+            const url = "/centres"
+
+            const response = await axiosInstance.get(url);
+            setData(response.data);
+            setFilterRecords(response.data);
+        } catch (error) {
+            console.log('Error fetching data', error);
+        }
+    };
     useEffect(() => {
         setLoading(true);
+        fetchDataCenter()
         axiosInstance
             .get('/bookings/')
             .then((response) => {
@@ -47,7 +66,7 @@ let cusID = localStorage.getItem("cusID")
                 console.log(error);
                 setLoading(false);
             });
-    
+
         // Calculate booking count when Booking_Date changes
         if (Booking_Date) {
             calculateBookingCount();
@@ -56,16 +75,16 @@ let cusID = localStorage.getItem("cusID")
 
     useEffect(() => {
         setLoading(true);
-    
+
         // Check if Booking_Date is not empty
         if (Booking_Date) {
             // Format the selected date to match the format in the database
             const formattedDate = new Date(Booking_Date).toISOString();
-            
+
             axiosInstance
                 .get(`/bookinglimits/${formattedDate}`)
                 .then((response) => {
-                    setMaxBookingLimit(response.data.Booking_Limit );
+                    setMaxBookingLimit(response.data.Booking_Limit);
                     setLoading(false);
                 })
                 .catch((error) => {
@@ -78,10 +97,7 @@ let cusID = localStorage.getItem("cusID")
     }, [Booking_Date]);
 
     const validateCustomerName = (name) => {
-        // Regular expression for validating customer name (allowing alphabets, spaces, and possibly some special characters)
-        const regex = /^[a-zA-Z\s]+$/;
-        // Check if the name matches the pattern and its length is within the limit
-        return regex.test(name.trim()) && name.trim().length <= 50;
+        return true;
     };
     // Validation function for Vehicle Number
     const validateVehicleNumber = (value) => {
@@ -110,14 +126,14 @@ let cusID = localStorage.getItem("cusID")
 
     useEffect(() => {
         setLoading(true);
-        axiosInstance.get(`/customer/${cusID}`)
+        axiosInstance.get(`/customers/byemail/${cusID}`)
             .then((response) => {
                 const data = response.data;
                 setUserData(response.data);
-                setcussID(data.cusID);
-                setContact_Number(data.phone);
-                setEmail(data.email);
-                setCustomer_Name(`${data.firstName} ${data.lastName}`);
+                setcussID(data.CustomerID);
+                setContact_Number(data.Contact);
+                setEmail(data.Email);
+                setCustomer_Name(data.Name);
                 setLoading(false);
             })
             .catch((error) => {
@@ -127,18 +143,18 @@ let cusID = localStorage.getItem("cusID")
             });
     }, [cusID]);
 
- 
-
- 
 
 
 
 
-    
 
-    const handleSaveBooking =  () => {
-        
-        if (!Booking_Date  || !Customer_Name || !Vehicle_Type || !Vehicle_Number || !Contact_Number || !Email ) {
+
+
+
+
+    const handleSaveBooking = () => {
+
+        if (!Booking_Date || !Customer_Name || !Vehicle_Type || !Vehicle_Number || !Contact_Number || !Email) {
             alert("All fields are required.");
             return;
         }
@@ -165,7 +181,8 @@ let cusID = localStorage.getItem("cusID")
             Vehicle_Number,
             Contact_Number,
             Email,
-       
+            Center_Name
+
         };
 
         setLoading(true);
@@ -173,15 +190,42 @@ let cusID = localStorage.getItem("cusID")
             .post('/bookings', data)
             .then(() => {
                 setLoading(false);
-                alert('Your Booking is successfull');
-                navigate(`/ReadOneHome/${cusID}`);
+
+                Swal.fire({
+                    title: 'Your Booking is successfull!',
+                    text: response.data.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                });
+                let role = localStorage.getItem("role")
+
+                if (role == "Admin") {
+
+                    navigate("/admin/app/dashboard/analytics");
+                }
+                else {
+
+                    navigate("/user/bookingList");
+                }
             })
             .catch((error) => {
                 setLoading(false);
                 if (error.response && error.response.status === 400 && error.response.data.message === 'Booking limit exceeded for the selected date') {
-                    alert('Booking limit exceeded for the selected date');
+
+                    Swal.fire({
+                        title: 'Booking limit exceeded for the selected date',
+                        text: response.data.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
                 } else {
-                    alert('An error occurred. Please check console for more information');
+
+                    Swal.fire({
+                        title: 'An error occurred. Please check console for more information',
+                        text: response.data.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
                     console.log(error);
                 }
             });
@@ -190,88 +234,111 @@ let cusID = localStorage.getItem("cusID")
     const today = new Date().toISOString().split('T')[0];
 
     return (
-        <div>   
-      <div style={styles.container}>
-            <div style={styles.formContainer}>
-                <h1 style={styles.heading}>Create Booking </h1>
-                <div style={styles.underline}></div>
-                {loading ? <Spinner /> : ''}
-                <div style={styles.form}>
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Select Date</label>
-                        <input
-                            type='date'
-                            value={Booking_Date}
-                            onChange={(e) => setBooking_Date(e.target.value)}
-                            min={today}
-                            style={styles.input}
-                        />
+        <div>
+            <div style={styles.container}>
+                <div style={styles.formContainer}>
+                    <h1 style={styles.heading}>Create Booking </h1>
+                    <div style={styles.underline}></div>
+                    {loading ? <Spinner /> : ''}
+                    <div style={styles.form}>
+                        <div style={styles.inputGroup}>
+                            <label style={styles.label}>Select Date</label>
+                            <input
+                                type='date'
+                                value={Booking_Date}
+                                onChange={(e) => setBooking_Date(e.target.value)}
+                                min={today}
+                                style={styles.input}
+                            />
+                        </div>
+                        <p style={{ color: 'red', fontSize: '1.2rem' }}>Available Bookings: {maxBookingLimit - bookingCount}</p>
+
+
+                        <div style={styles.inputGroup}>
+                            <label style={styles.label}>Customer reference</label>
+                            <input
+                                type='text'
+                                value={cussID}
+                                readOnly
+                                onChange={(e) => setcussID(e.target.value)}
+                                style={styles.input}
+                            />
+                        </div>
+                        <div style={styles.inputGroup}>
+                            <label style={styles.label}>Customer Name</label>
+                            <input
+                                type='text'
+                                readOnly
+                                value={Customer_Name}
+                                onChange={(e) => setCustomer_Name(e.target.value)}
+                                style={styles.input}
+                            />
+                        </div>
+                        <div style={styles.inputGroup}>
+                            <label style={styles.label}>Center Controle</label>
+                            <select
+
+
+                                value={Center_Name}
+                                onChange={(e) => setCenter_Name(e.target.value)}
+                                style={styles.input}
+                            >
+                                <option value="">selectioner center</option>
+                                {
+                                    data.map((el, i) => {
+                                        return (<option value={el.Name} key={i}>{el.Name}</option>)
+                                    })
+                                }
+                            </select>
+                        </div>
+
+                        <div style={styles.inputGroup}>
+                            <label style={styles.label}>Vehicle Type</label>
+                            <select
+                                value={Vehicle_Type}
+                                onChange={(e) => setVehicle_Type(e.target.value)}
+                                style={styles.input}
+                            >
+                                <option value="">Select Vehicle Type</option>
+                                <option value="Van">Van</option>
+                                <option value="Car">Car</option>
+                                <option value="Bus">Bus</option>
+                            </select>
+                        </div>
+                        {console.log(userData)}
+                        <div style={styles.inputGroup}>
+                            <label style={styles.label}>Vehicle Number</label>
+                            <input
+                                type='text'
+                                value={Vehicle_Number}
+                                onChange={(e) => setVehicle_Number(e.target.value)}
+                                style={styles.input}
+                            />
+                        </div>
+                        <div style={styles.inputGroup}>
+                            <label style={styles.label}>Contact Number</label>
+                            <input
+                                type='text'
+                                readOnly
+                                value={Contact_Number}
+                                onChange={(e) => setContact_Number(e.target.value)}
+                                style={styles.input}
+                            />
+                        </div>
+                        <div style={styles.inputGroup}>
+                            <label style={styles.label}>Email</label>
+                            <input
+                                type='text'
+                                readOnly
+                                value={Email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                style={styles.input}
+                            />
+                        </div>
+                        <button onClick={handleSaveBooking} style={styles.button}>Save Booking</button>
                     </div>
-                    <p style={{ color: 'red', fontSize: '1.2rem' }}>Available Bookings: {maxBookingLimit - bookingCount}</p>
-       
-            
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Customer ID</label>
-                        <input
-                            type='text'
-                            value={cussID}
-                            onChange={(e) => setcussID(e.target.value)}
-                            style={styles.input}
-                        />
-                    </div>
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Customer Name</label>
-                        <input
-                            type='text'
-                            value={Customer_Name}
-                            onChange={(e) => setCustomer_Name(e.target.value)}
-                            style={styles.input}
-                        />
-                    </div>
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Vehicle Type</label>
-                        <select
-                            value={Vehicle_Type}
-                            onChange={(e) => setVehicle_Type(e.target.value)}
-                            style={styles.input}
-                        >
-                            <option value="">Select Vehicle Type</option>
-                            <option value="Van">Van</option>
-                            <option value="Car">Car</option>
-                            <option value="Bus">Bus</option>
-                        </select>
-                    </div>
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Vehicle Number</label>
-                        <input
-                            type='text'
-                            value={Vehicle_Number}
-                            onChange={(e) => setVehicle_Number(e.target.value)}
-                            style={styles.input}
-                        />
-                    </div>
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Contact Number</label>
-                        <input
-                            type='text'
-                            value={Contact_Number}
-                            onChange={(e) => setContact_Number(e.target.value)}
-                            style={styles.input}
-                        />
-                    </div>
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Email</label>
-                        <input
-                            type='text'
-                            value={Email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            style={styles.input}
-                        />
-                    </div>
-                    <button onClick={handleSaveBooking} style={styles.button}>Save Booking</button>
                 </div>
             </div>
-        </div>
         </div>
     );
 };
@@ -308,7 +375,7 @@ const styles = {
         padding: '10px',
         border: '1px solid rgba(255, 255, 255, 0.2)',
         borderRadius: '20px',
-        
+
     },
     heading: {
         fontSize: '3rem',

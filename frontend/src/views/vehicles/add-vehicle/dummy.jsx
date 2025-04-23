@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import config from '../../../config';
-import { FaCar, FaIdCard, FaTachometerAlt, FaGasPump, FaToggleOn, FaTimes  } from 'react-icons/fa';
+import { FaCar, FaIdCard, FaTachometerAlt, FaGasPump, FaToggleOn, FaTimes } from 'react-icons/fa';
 import axiosInstance from 'axiosInstance';
 
 const AddVehicle = () => {
@@ -12,7 +12,7 @@ const AddVehicle = () => {
     VehicleType: '',
     RegistrationNo: '',
     Capacity: '',
-    FuelType:'',
+    FuelType: '',
     Availability: '',
   });
 
@@ -28,30 +28,30 @@ const AddVehicle = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let formErrors = {};
-  
+
     if (!formData.VehicleType) formErrors.VehicleType = 'VehicleType is required';
     if (!formData.RegistrationNo) formErrors.RegistrationNo = 'RegistrationNo is required';
     if (!formData.Capacity) formErrors.Capacity = 'Capacity is required';
     if (!formData.FuelType) formErrors.FuelType = 'FuelType is required'
     if (!formData.Availability) formErrors.Availability = 'Availability is required';
-    
-    
-  
+
+
+
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
       return;
     }
-  
+
     try {
       // const response = await axios.post(`${config.baseURL}/vehicles`, formData);
-      const response = await axiosInstance.post('/vehicles',formData);
+      const response = await axiosInstance.post('/vehicles', formData);
       Swal.fire({
         title: 'Success!',
         text: response.data.message,
         icon: 'success',
         confirmButtonText: 'OK',
       });
-     navigate('/basic/vehicles-list');
+      navigate('/admin/basic/vehicles-list');
     } catch (error) {
       console.error("Error details:", error);
       if (error.response && error.response.status === 400) {
@@ -71,11 +71,11 @@ const AddVehicle = () => {
       }
     }
   };
-  
+
   return (
-    
+
     <div className="profile-container">
-      <div className="close-icon" onClick={() => navigate('/basic/vehicles-list')}>
+      <div className="close-icon" onClick={() => navigate('/admin/basic/vehicles-list')}>
         <FaTimes />
       </div>
       <h3 className='form-title'>Add Vehicle</h3>
@@ -83,7 +83,7 @@ const AddVehicle = () => {
         <div className="profile-group">
           <label htmlFor="VehicleType">Vehicle Type</label>
           <div className="input-container">
-          <FaCar className="icon" />
+            <FaCar className="icon" />
             <input
               type="text"
               id="VehicleType"
@@ -98,7 +98,7 @@ const AddVehicle = () => {
         <div className="profile-group">
           <label htmlFor="RegistrationNo">Registration NO</label>
           <div className="input-container">
-          <FaIdCard className="icon" />
+            <FaIdCard className="icon" />
             <input
               type="text"
               id="RegistrationNo"
@@ -110,11 +110,11 @@ const AddVehicle = () => {
           </div>
           {errors.RegistrationNo && <p className="error">{errors.RegistrationNo}</p>}
         </div>
- 
+
         <div className="profile-group">
           <label htmlFor="Capacity">Capacity</label>
           <div className="input-container">
-          <FaTachometerAlt className="icon" />
+            <FaTachometerAlt className="icon" />
             <input
               type="text"
               id="Capacity"
@@ -125,12 +125,12 @@ const AddVehicle = () => {
           </div>
           {errors.Capacity && <p className="error">{errors.Capacity}</p>}
         </div>
-        
+
         <div className="profile-group">
           <label htmlFor="Availability">Availability</label>
           <div className="select-container input-container">
             <FaToggleOn className="icon" />
-            <select id='Availability' name='Availability' value={formData.Availability}  onChange={handleChange} >
+            <select id='Availability' name='Availability' value={formData.Availability} onChange={handleChange} >
               <option value="" disabled>select availability</option>
               <option value="Available">Available</option>
               <option value="Unavailable">Unavailable</option>
@@ -141,7 +141,7 @@ const AddVehicle = () => {
         <div className="profile-group">
           <label htmlFor="FuelType">Fuel Type</label>
           <div className="input-container">
-          <FaGasPump className="icon" />
+            <FaGasPump className="icon" />
             <input
               type="text"
               id="FuelType"

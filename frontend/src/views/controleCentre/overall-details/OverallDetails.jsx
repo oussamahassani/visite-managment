@@ -92,9 +92,9 @@ const VehicleUsageStats = () => {
               <th>Vehicle Type</th>
               <th>Vehicle Name</th>
               <th>Vehicle NO</th>
-              <th>Total Visite</th>
-              <th>last visite Result</th>
-
+              <th>Total Hours Used</th>
+              <th>Total Trips</th>
+              <th>Total Distance Covered</th>
               <th>Total Revenue</th>
             </tr>
           </thead>
@@ -110,8 +110,9 @@ const VehicleUsageStats = () => {
                   <td>{record.Vehicle ? record.Vehicle.VehicleType : '-'}</td>
                   <td>{record.Vehicle ? record.Vehicle.VehicleName : '-'}</td>
                   <td>{record.Vehicle ? record.Vehicle.RegistrationNo : '-'}</td>
-                  <td>{record.totalvisite || '-'}</td>
-                  <td>{record.Status || '-'}</td>
+                  <td>{record.totalHoursUsed || '-'}</td>
+                  <td>{record.totalTrips || '-'}</td>
+                  <td>{record.totalDistanceCovered || '-'}</td>
                   <td>{record.totalRevenue || '-'}</td>
                 </tr>
               ))

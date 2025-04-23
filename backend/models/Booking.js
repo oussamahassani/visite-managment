@@ -11,6 +11,10 @@ const Booking = sequelize.define('bookings', {
     type: DataTypes.STRING,
     unique: true
   },
+  NameCenter: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   cusID: {
     type: DataTypes.STRING
   },

@@ -1,5 +1,5 @@
 const Payment = require('../models/Payment');
-const Order = require('../models/Order');
+const Order = require('../models/Visite');
 const OrderPaymentsSummary = require('../models/OrderPaymentSummary');
 
 exports.addPayment = async (req, res) => {
@@ -39,7 +39,7 @@ exports.addPayment = async (req, res) => {
       PaymentMethod,
       PaymentDate,
       RemainingBalance: remainingBalance,
-      Status: 'Paid', 
+      Status: 'Paid',
     });
     if (latestSummary) {
       await latestSummary.update({
@@ -86,7 +86,7 @@ exports.getPaymentById = async (req, res) => {
     if (payment) {
       res.status(200).json(payment);
     } else {
-      res.status(404).json({ error: 'Payment not found',error });
+      res.status(404).json({ error: 'Payment not found', error });
     }
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch payment' });

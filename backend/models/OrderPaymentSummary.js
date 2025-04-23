@@ -1,15 +1,13 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
+const { v4: uuidv4 } = require('uuid');
 
 const OrderPaymentsSummary = sequelize.define('OrderPaymentsSummary', {
   OrderID: {
     type: DataTypes.UUID,
-    allowNull: false,
+    defaultValue: uuidv4,
     primaryKey: true,
-    references: {
-      model: 'Orders',
-      key: 'OrderID',
-    },
+
   },
   CustomerID: {
     type: DataTypes.UUID,
@@ -23,19 +21,19 @@ const OrderPaymentsSummary = sequelize.define('OrderPaymentsSummary', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  VehicleName:{
+  VehicleName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  RegistrationNo:{
+  RegistrationNo: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  StartDate:{
+  StartDate: {
     type: DataTypes.DATE,
     allowNull: false,
   },
-  EndDate:{
+  EndDate: {
     type: DataTypes.DATE,
     allowNull: false,
   },

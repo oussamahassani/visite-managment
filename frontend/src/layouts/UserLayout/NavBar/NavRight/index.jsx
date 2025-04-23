@@ -16,8 +16,8 @@ const NavRight = () => {
   useEffect(() => {
     const fetchPendingCustomers = async () => {
       try {
-        const response = await axiosInstance.get('/notify/pending'); 
-        setPendingCustomers(response.data.customers || []); 
+        const response = await axiosInstance.get('/notify/pending');
+        setPendingCustomers(response.data.customers || []);
       } catch (error) {
         console.error('Error fetching pending customers:', error);
       }
@@ -30,12 +30,12 @@ const NavRight = () => {
     try {
       await axiosInstance.post('/logout');
       localStorage.removeItem('authToken');
-      navigate('/auth/login'); 
+      navigate('/auth/login');
     } catch (error) {
       console.error('Error during logout:', error);
     }
   };
-  
+
   return (
     <React.Fragment>
       <ListGroup as="ul" bsPrefix=" " className="navbar-nav ml-auto">
@@ -73,10 +73,10 @@ const NavRight = () => {
                               <strong>{customer.name}</strong>
                               <span className="n-time text-muted">
                                 <i className="icon feather icon-clock me-2" />
-                                {customer.status} 
+                                {customer.status}
                               </span>
                             </p>
-                            <p>₹{customer.remainingBalance}</p>
+                            <p>DT {customer.remainingBalance}</p>
                           </Card.Body>
                         </Card>
                       </ListGroup.Item>
@@ -89,12 +89,12 @@ const NavRight = () => {
                 </ListGroup>
               </PerfectScrollbar>
               <div className="noti-footer">
-                <Link to="/basic/orders-payment">show all</Link>
+                <Link to="/admin/basic/orders-payment">show all</Link>
               </div>
             </Dropdown.Menu>
           </Dropdown>
         </ListGroup.Item>
-        
+
         <ListGroup.Item as="li" bsPrefix=" ">
           <Dropdown align="end" className="drp-user">
             <Dropdown.Toggle as={Link} variant="link" to="#" id="dropdown-basic">
