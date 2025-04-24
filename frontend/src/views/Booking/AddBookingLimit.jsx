@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axiosInstance from "axiosInstance";
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
+import Swal from 'sweetalert2';
 
 
 const AddBookingLimit = () => {
@@ -27,7 +28,12 @@ const AddBookingLimit = () => {
             .post('/bookinglimits', data)
             .then(() => {
                 setLoading(false);
-                alert('Booking limit added successfully.');
+                Swal.fire({
+                    title: 'Success!',
+                    text: "Booking limit added successfully.",
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                });
                 navigate('/admin/booking/bookinglimit-list');
             })
             .catch((error) => {

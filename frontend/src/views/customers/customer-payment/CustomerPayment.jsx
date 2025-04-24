@@ -47,52 +47,52 @@ const CustomerPayment = ({ CustomerID, onClose }) => {
           <FaTimes />
         </div>
         <div className="table-responsive">
-        {payments.length > 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Order No</th>
-                <th>Vehicle Name</th>
-                <th>Vehicle NO</th>
-                <th>Date</th>
-                <th>Total Amount</th>
-                <th>Amount Paid</th>
-                <th>Remaining Balance</th>
-                <th>Payment Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {payments.map((payment) => (
-                <tr key={payment.PaymentID}>
-                  <td>{payment.OrderNo}</td>
-                  <td>{payment.VehicleName}</td>
-                  <td>{payment.RegistrationNo}</td>
-                  <td>{formatDate(payment.StartDate)} - {formatDate(payment.EndDate)}</td>
-                  <td>{payment.TotalAmount}</td>
-                  <td>{payment.TotalPaid}</td>
-                  <td>{payment.RemainingBalance}</td>
-                  <td>{formatDate(payment.updatedAt)}</td>
-                  <td data-status={payment.Status}>{payment.Status}</td>
+          {payments.length > 0 ? (
+            <table>
+              <thead>
+                <tr>
+                  <th> No</th>
+                  <th>Vehicle Name</th>
+                  <th>Vehicle NO</th>
+                  <th>Date</th>
+                  <th>Total Amount</th>
+                  <th>Amount Paid</th>
+                  <th>Remaining Balance</th>
+                  <th>Payment Date</th>
+                  <th>Status</th>
                 </tr>
-              ))}
-            </tbody>
-            <tfoot className='tfoot'>
-                  <tr>
-                    <td colSpan="8" className="text-end"><strong>Total Paid Amount:</strong></td>
-                    <td>{totalPaid}</td>
+              </thead>
+              <tbody>
+                {payments.map((payment) => (
+                  <tr key={payment.PaymentID}>
+                    <td>{payment.OrderNo}</td>
+                    <td>{payment.VehicleName}</td>
+                    <td>{payment.RegistrationNo}</td>
+                    <td>{formatDate(payment.StartDate)} - {formatDate(payment.EndDate)}</td>
+                    <td>{payment.TotalAmount}</td>
+                    <td>{payment.TotalPaid}</td>
+                    <td>{payment.RemainingBalance}</td>
+                    <td>{formatDate(payment.updatedAt)}</td>
+                    <td data-status={payment.Status}>{payment.Status}</td>
                   </tr>
-                  <tr>
-                    <td colSpan="8" className="text-end"><strong>Remaining Amount:</strong></td>
-                    <td>{totalRemaining}</td>
-                  </tr>
-          </tfoot>
-          </table>
-        ) : (
-          <p>No payment details found for this customer.</p>
-        )}
-           <tr></tr>
-           </div>
+                ))}
+              </tbody>
+              <tfoot className='tfoot'>
+                <tr>
+                  <td colSpan="8" className="text-end"><strong>Total Paid Amount:</strong></td>
+                  <td>{totalPaid}</td>
+                </tr>
+                <tr>
+                  <td colSpan="8" className="text-end"><strong>Remaining Amount:</strong></td>
+                  <td>{totalRemaining}</td>
+                </tr>
+              </tfoot>
+            </table>
+          ) : (
+            <p>No payment details found for this customer.</p>
+          )}
+          <tr></tr>
+        </div>
       </div>
     </div>
   );

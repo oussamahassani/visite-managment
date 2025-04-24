@@ -302,15 +302,16 @@ const OverallDetails = lazy(() => import('./views/vehicles/overall-details/Overa
 const AddCustomer = lazy(() => import('./views/customers/add-customer/AddCustomer'));
 const CustomersList = lazy(() => import('./views/customers/customers-list/CustomersList'));
 const CustomerPayment = lazy(() => import('./views/customers/customer-payment/CustomerPayment'));
-const AddOrder = lazy(() => import('./views/orders/add-order/AddOrder'));
-const OrderList = lazy(() => import('./views/orders/order-list/OrderList'));
-const UpdateOrder = lazy(() => import('./views/orders/update-order/UpdateOrder'));
+const AddOrder = lazy(() => import('./views/visites/add-order/AddOrder'));
+const OrderList = lazy(() => import('./views/visites/order-list/OrderList'));
+const UpdateOrder = lazy(() => import('./views/visites/update-order/UpdateOrder'));
 const AddPayment = lazy(() => import('./views/payment/add-payment/AddPayment'));
 const PaymentList = lazy(() => import('./views/payment/payment-list/PaymentList'));
 const OrdersPayment = lazy(() => import('./views/payment/orders-payment/OrdersPayment'));
 const AddExpense = lazy(() => import('./views/expense/add-expense/AddExpense'));
 const ExpenseList = lazy(() => import('./views/expense/expense-list/ExpenseList'));
 const AddBookingLimit = lazy(() => import('./views/Booking/AddBookingLimit'));
+const UpdateBookingLimit = lazy(() => import('./views/Booking/EditBookingLimit'));
 const BookingLimitDashBoard = lazy(() => import('./views/Booking/BookingLimitDashBoard'));
 const CreateBooking = lazy(() => import('./views/Booking/CreateBooking'));
 const BookingDashBoard = lazy(() => import('./views/Booking/BookingDashBoard'));
@@ -415,6 +416,10 @@ export const routes = [
         element: <AddBookingLimit />
       },
       {
+        path: 'booking/bookinglimitEdit/:id',
+        element: <UpdateBookingLimit />
+      },
+      {
         path: 'booking/bookinglimit-list',
         element: <BookingLimitDashBoard />
       },
@@ -436,7 +441,7 @@ export const routes = [
         element: <ControleCentreList />
       },
       {
-        path: 'controlecenter/update',
+        path: 'controlecenter/update/:id',
         element: <UpdateControleCentrevehicle />
       },
       {

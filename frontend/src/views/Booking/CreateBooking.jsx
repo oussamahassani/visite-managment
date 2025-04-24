@@ -44,7 +44,7 @@ const CreateBooking = () => {
     const fetchDataCenter = async () => {
         try {
 
-            const url = "/centres"
+            let url = "/centres"
 
             const response = await axiosInstance.get(url);
             setData(response.data);

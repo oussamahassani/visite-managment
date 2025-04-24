@@ -9,7 +9,7 @@ const menuItems = {
       icon: 'icon-navigation',
       children: [
         {
-          id: 'dashboard',
+          id: '0-0',
           title: 'Dashboard',
           type: 'item',
           icon: 'feather icon-home',
@@ -52,19 +52,19 @@ const menuItems = {
           icon: 'feather icon-box',
           children: [
             {
-              id: 'button',
+              id: 'button-01',
               title: 'Add Vehicles',
               type: 'item',
               url: '/admin/basic/add-vehicle'
             },
             {
-              id: 'badges',
+              id: 'badges-02',
               title: 'Vehicle List',
               type: 'item',
               url: '/admin/basic/vehicles-list'
             },
             {
-              id: 'overall-details',
+              id: 'overall-details-03',
               title: 'Overall Details',
               type: 'item',
               url: '/admin/basic/overall-details'
@@ -72,31 +72,31 @@ const menuItems = {
           ]
         },
         {
-          id: 'booking',
+          id: 'booking-04',
           title: 'Booking',
           type: 'collapse',
           icon: 'feather icon-box',
           children: [
             {
-              id: 'add-Booking-limit',
+              id: 'add-Booking-limit-05',
               title: 'Add Booking limit',
               type: 'item',
               url: '/admin/booking/bookinglimit'
             },
             {
-              id: 'customer-list',
+              id: 'customer-list-06',
               title: ' Booking limit List',
               type: 'item',
               url: '/admin/booking/bookinglimit-list'
             },
             {
-              id: 'add-Booking',
+              id: 'add-Booking-07',
               title: 'Add Booking ',
               type: 'item',
               url: '/admin/booking/booking-create'
             },
             {
-              id: 'book-list',
+              id: 'book-list-08',
               title: ' Booking  List',
               type: 'item',
               url: '/admin/booking/booking-list'
@@ -104,19 +104,19 @@ const menuItems = {
           ]
         },
         {
-          id: 'customer',
+          id: 'customer-09',
           title: 'Customer',
           type: 'collapse',
           icon: 'feather icon-box',
           children: [
             {
-              id: 'add-customer',
+              id: 'add-customer-10',
               title: 'Add Customer',
               type: 'item',
               url: '/admin/basic/add-customer'
             },
             {
-              id: 'customer-list',
+              id: 'customer-list-11',
               title: 'Customer List',
               type: 'item',
               url: '/admin/basic/customers-list'
@@ -124,19 +124,19 @@ const menuItems = {
           ]
         },
         {
-          id: 'order',
+          id: 'order-12',
           title: 'Visit',
           type: 'collapse',
           icon: 'feather icon-box',
           children: [
             {
-              id: 'add-order',
+              id: 'add-order-13',
               title: 'Add Visit',
               type: 'item',
               url: '/admin/basic/add-order'
             },
             {
-              id: 'order-list',
+              id: 'order-list-14',
               title: 'Visit List',
               type: 'item',
               url: '/admin/basic/order-list'
@@ -144,25 +144,25 @@ const menuItems = {
           ]
         },
         {
-          id: 'payment',
+          id: 'payment-15',
           title: 'Payment',
           type: 'collapse',
           icon: 'feather icon-box',
           children: [
             {
-              id: 'add-payment',
+              id: 'add-payment-16',
               title: 'Add Payment',
               type: 'item',
               url: '/admin/basic/add-payment'
             },
             {
-              id: 'orders-payment',
+              id: 'orders-payment-17',
               title: 'Orders Payment',
               type: 'item',
               url: '/admin/basic/orders-payment'
             },
             {
-              id: 'payment-list',
+              id: 'payment-list-18',
               title: 'Payment List',
               type: 'item',
               url: '/admin/basic/payment-list'
@@ -172,19 +172,19 @@ const menuItems = {
         },
 
         {
-          id: 'expense',
+          id: 'expense-19',
           title: 'Expense',
           type: 'collapse',
           icon: 'feather icon-box',
           children: [
             {
-              id: 'add-expense',
+              id: 'add-expense-20',
               title: 'Add Expense',
               type: 'item',
               url: '/admin/basic/add-expense'
             },
             {
-              id: 'expense-list',
+              id: 'expense-list-21',
               title: 'Expense List',
               type: 'item',
               url: '/admin/basic/expense-list'

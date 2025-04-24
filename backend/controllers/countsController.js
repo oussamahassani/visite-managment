@@ -115,7 +115,6 @@ exports.getVehicleUsageStats = async (req, res) => {
       attributes: [
         'VehicleID',
         'Status',
-        [sequelize.fn('COUNT', sequelize.col('VehicleID')), 'vehicleCount'] // 🔥 Ajout du compteur
 
       ],
       where: timeFilter !== 'all' ? { createdAt: dateCondition } : {},
@@ -128,6 +127,20 @@ exports.getVehicleUsageStats = async (req, res) => {
         },
       ],
     });
+    const vehicleCount = await Order.findAll({
+      attributes: [
+        'VehicleID',
+        [sequelize.fn('COUNT', sequelize.col('VehicleID')), 'vehicleCount'] // 👈 Explicit table alias
+
+
+      ],
+      where: timeFilter !== 'all' ? { createdAt: dateCondition } : {},
+      group: ['VehicleID'],
+
+    });
+    console.log(vehicleCount)
+    console.log(vehicleStats)
+
     const vehicleExpenses = await Expense.findAll({
       attributes: [
         'VehicleID',
@@ -181,6 +194,7 @@ exports.getVehicleUsageStats = async (req, res) => {
         ...vehicle.get({ plain: true }),
         totalExpense: expenseMap[vehicleID]?.totalExpense || 0,
         DefautDetails: groupedExpenseMap[VisiteId] || [],
+        CountVisite: vehicleCount.filter(el => el['VehicleID'] == vehicleID),
         totalPaid: regNo && paymentMap[regNo] ? paymentMap[regNo].totalPaid : 0,
         remainingBalance: regNo && paymentMap[regNo] ? paymentMap[regNo].remainingBalance : 0,
         Status: vehicle.Status,

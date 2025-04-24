@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import BackButton from '../../components/BackButton';
 import Spinner from '../../components/Spinner';
-import axios from 'axios';
-import backgroundImage from '../../images/t.jpg';
 import { useNavigate, useParams } from 'react-router-dom';
+import axiosInstance from "axiosInstance";
 
 
 export default function EditBookingLimit() {
@@ -17,7 +15,7 @@ export default function EditBookingLimit() {
   useEffect(() => {
     setLoading(true);
 
-    axios.get(`http://localhost:8076/bookinglimits/${id}`)
+    axiosInstance.get(`/bookinglimits/${id}`)
 
       .then((response) => {
         const bookingDate = response.data.Booking_Date.substring(0, 10);
@@ -44,10 +42,10 @@ export default function EditBookingLimit() {
     };
 
     setLoading(true);
-    axios.put(`http://localhost:8076/bookinglimits/${id}`, data)
+    axiosInstance.put(`/bookinglimits/${id}`, data)
       .then(() => {
         setLoading(false);
-        navigate('/booking/bookinglimitdashboard');
+        navigate('/admin/booking/bookinglimit-list');
 
       })
       .catch((error) => {
@@ -65,7 +63,6 @@ export default function EditBookingLimit() {
   return (
     <div style={styles.container}>
       <div style={styles.formContainer}>
-        <BackButton destination='/admin/booking/bookinglimit-list' />
         <h1 style={styles.heading}>Edit Booking Limits</h1>
         {loading ? <Spinner /> : ''}
         <div style={styles.form}>
@@ -104,16 +101,12 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: '100vh',
-    backgroundImage: `url(${backgroundImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },
   formContainer: {
     width: '50%',
-    backgroundColor: 'rgba(5, 4, 2, 0.8)',
     borderRadius: '10px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.8)',
     padding: '20px',
     border: '2px solid red', // Add a red border
     borderColor: 'red',
@@ -151,9 +144,7 @@ const styles = {
     padding: '10px',
     border: '1px solid rgba(255, 255, 255, 0.8)',
     borderRadius: '5px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.4)',
     color: 'rgba(255, 255, 255, 0.8)',
-    backgroundColor: 'rgba(5, 4, 2, 0.8)',
   },
   label: {
     fontWeight: 'bold',
@@ -168,14 +159,12 @@ const styles = {
     padding: '10px',
     display: 'block',
     textTransform: 'uppercase',
-    backgroundColor: 'black',
   },
   input: {
     width: '100%',
     padding: '10px',
     borderRadius: '5px',
     border: '1px solid #ccc',
-    backgroundColor: '#1B1B1B',
   },
   buttonContainer: {
     display: 'flex',

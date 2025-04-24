@@ -12,6 +12,7 @@ function BookingDashBoard() {
     const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const componentRef = useRef();
+    const [role, setRole] = useState(localStorage.getItem("role"));
 
     const handleSearch = async () => {
         setLoading(true);
@@ -29,7 +30,7 @@ function BookingDashBoard() {
         setLoading(true);
         const role = localStorage.getItem("role")
         const userId = localStorage.getItem("user")
-        const url = "/bookings/"
+        let url = "/bookings/"
         if (role !== "Admin") {
             url = "/bookings/byuser/" + userId
         }
@@ -80,16 +81,18 @@ function BookingDashBoard() {
                                 <div className="nav-link">
                                     <div className="d-flex  justify-content-around">
 
-                                        <button className='btn '
-                                            onClick={() => { window.location.href = '/admin/booking/booking-create' }}
+                                        {<button className='btn '
+                                            onClick={() => { window.location.href = role == "Admin" ? '/admin/booking/booking-create' : '/user/addBooking' }}
                                         >
                                             Add Booking
                                         </button>
-                                        <button className='btn btn-primary'
+                                        }
+
+                                        {role == "Admin" && <button className='btn btn-primary'
                                             onClick={() => { window.location.href = '/admin/booking/booking-list' }}
                                         >
                                             All Bookings
-                                        </button>
+                                        </button>}
 
                                         <ReportBookings filteredBooking={filteredBooking} />
 

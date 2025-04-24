@@ -15,18 +15,23 @@ const VehiclesList = () => {
   const [filterRecords, setFilterRecords] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(7);
+  const [role, setRole] = useState(localStorage.getItem("role"));
+
+  const [cusID, setcusID] = useState(localStorage.getItem("email"));
+  const [cussID, setcussID] = useState(localStorage.getItem("idcustomer"));
+
 
   useEffect(() => {
+
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const role = localStorage.getItem("role")
-      const userId = localStorage.getItem("user")
-      const url = "/vehicles"
+
+      let url = "/vehicles"
       if (role !== "Admin") {
-        url = "/vehicles/byuser/" + userId
+        url = "/vehicles/byuser/" + cussID
       }
       const response = await axiosInstance.get(url);
       setData(response.data);
@@ -160,9 +165,14 @@ const VehiclesList = () => {
           <input type="text" placeholder="Search..." onChange={handleFilter} />
           <SearchOutlinedIcon />
         </div>
-        <Link to='/basic/add-vehicle'>
-          <button className="new-user-btn" >+ New Vehicle</button>
-        </Link>
+        {role == "Admin" ?
+          <Link to='/admin/basic/add-vehicle'>
+            <button className="new-user-btn" >+ New Vehicle</button>
+          </Link> : <Link to='/user/add-vehicle'>
+            <button className="new-user-btn" >+ New Vehicle</button>
+          </Link>
+        }
+
       </div>
       <div className="table-responsive">
         <table className="responsive-table" style={{ overflow: 'auto' }}>
@@ -209,9 +219,9 @@ const VehiclesList = () => {
                         anchorEl={anchorEl}
                         open={menuId === vehicle.VehicleID}
                         onClose={handleClose}>
-                        <Link to={`/vehicles/update-vehicle/${vehicle.VehicleID}`}>
+                        {role == "Admin" && <Link to={`/vehicles/update-vehicle/${vehicle.VehicleID}`}>
                           <MenuItem style={{ color: 'black' }}>Edit</MenuItem>
-                        </Link>
+                        </Link>}
                         <MenuItem
                           onClick={(event) => {
                             event.stopPropagation();

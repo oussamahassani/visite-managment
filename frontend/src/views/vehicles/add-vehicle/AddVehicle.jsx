@@ -19,6 +19,7 @@ const AddVehicle = () => {
   });
   const [cussID, setcussID] = useState('');
   const [cusID, setcusID] = useState(localStorage.getItem("email"));
+  const [role, setRole] = useState(localStorage.getItem("role"));
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -73,9 +74,15 @@ const AddVehicle = () => {
         icon: 'success',
         confirmButtonText: 'OK',
       });
-      navigate('/admin/basic/vehicles-list');
+      if (role !== "Admin") {
+        navigate('/admin/basic/vehicles-list');
+      }
+      else {
+        navigate('/user/voiture');
+
+      }
     } catch (error) {
-      console.error("Error details:", error);
+      console.error("Error details:", error.response.data);
       if (error.response && error.response.status === 400) {
         Swal.fire({
           title: 'Error!',
@@ -86,7 +93,10 @@ const AddVehicle = () => {
       } else {
         Swal.fire({
           title: 'Error!',
-          text: 'Something went wrong. Please try again later.',
+          text: 'Something went wrong. Please try again later.' + error.response.data.error.
+
+            errors[0].message
+          ,
           icon: 'error',
           confirmButtonText: 'OK',
         });

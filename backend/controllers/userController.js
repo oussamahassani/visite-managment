@@ -138,14 +138,19 @@ exports.login = async (req, res) => {
             secretKey,
             { expiresIn: '1h' }
         );
-
+        let idcustumer = null;
+        if (user.role != "Admin") {
+            let emailUser = user.email;
+            const existingUser = await Customer.findOne({ where: { email: emailUser } })
+            idcustumer = existingUser.CustomerID;
+        }
         res.cookie('accessToken', token, {
             httpOnly: true,
             secure: false,
             maxAge: 3600000,
         });
 
-        return res.status(200).json({ login: true, email: user.email, user: user.uuid, token, role: user.role, message: 'Login successful' });
+        return res.status(200).json({ login: true, idcustomer: idcustumer, email: user.email, user: user.uuid, token, role: user.role, message: 'Login successful' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error during login' });

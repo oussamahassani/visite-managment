@@ -16,13 +16,12 @@ const UpdateControleCentre = () => {
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  const { VehicleID } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchVehicleData = async () => {
       try {
-        // const response = await axios.get(`${config.baseURL}/vehicles/${VehicleID}`);
-        const response = await axiosInstance.get(`/centres/${VehicleID}`);
+        const response = await axiosInstance.get(`/centres/${id}`);
         console.log('Fetched data:', response.data);
         if (response.data) {
           setFormData(response.data);
@@ -32,10 +31,10 @@ const UpdateControleCentre = () => {
       }
     };
 
-    if (VehicleID) {
+    if (id) {
       fetchVehicleData();
     }
-  }, [VehicleID]);
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -59,15 +58,14 @@ const UpdateControleCentre = () => {
     }
 
     try {
-      // const response = await axios.put(`${config.baseURL}/vehicles/${VehicleID}`, formData);
-      const response = await axiosInstance.put(`/centres/${VehicleID}`, formData);
+      const response = await axiosInstance.put(`/centres/${id}`, formData);
       Swal.fire({
         title: 'Success!',
         text: response.data.message,
         icon: 'success',
         confirmButtonText: 'OK',
       });
-      navigate('/admin/controlecenter/update')
+      navigate('/admin/controlecenter/liste')
     } catch (error) {
       console.error("Error details:", error);
       if (error.response && error.response.status === 400) {

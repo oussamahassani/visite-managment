@@ -23,7 +23,7 @@ const ControleCentreList = () => {
   const fetchData = async () => {
     try {
 
-      const url = "/centres"
+      let url = "/centres"
 
       const response = await axiosInstance.get(url);
       setData(response.data);
@@ -57,10 +57,8 @@ const ControleCentreList = () => {
   //Filter
   const handleFilter = (event) => {
     const filteredData = data.filter((row) =>
-      (row.VehicleType && row.VehicleType.toLowerCase().includes(event.target.value.toLowerCase())) ||
-      (row.RegistrationNo && row.RegistrationNo.toLowerCase().includes(event.target.value.toLowerCase())) ||
-      (row.UsageType && row.UsageType.toLowerCase().includes(event.target.value.toLowerCase())) ||
-      (row.Capacity && row.Capacity.toLowerCase().includes(event.target.value.toLowerCase())) ||
+      (row.Telephone && row.Telephone.toLowerCase().includes(event.target.value.toLowerCase())) ||
+
       (row.FuelType && row.FuelType.toLowerCase().includes(event.target.value.toLowerCase())) ||
       (row.Availability && row.Availability.toLowerCase().includes(event.target.value.toLowerCase()))
     );
@@ -134,7 +132,7 @@ const ControleCentreList = () => {
           <input type="text" placeholder="Search..." onChange={handleFilter} />
           <SearchOutlinedIcon />
         </div>
-        <Link to='/basic/add-vehicle'>
+        <Link to='/admin/controlecenter/liste'>
           <button className="new-user-btn" >+ New Center</button>
         </Link>
       </div>

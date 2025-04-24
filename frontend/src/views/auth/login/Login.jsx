@@ -58,6 +58,9 @@ const Login = () => {
           localStorage.setItem("role", res.data.role)
           localStorage.setItem("user", res.data.user)
           localStorage.setItem("email", res.data.email)
+          localStorage.setItem("idcustomer", res.data.idcustomer)
+
+
 
           if (res.data.role == "Admin") {
 

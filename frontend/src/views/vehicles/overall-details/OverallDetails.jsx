@@ -110,7 +110,7 @@ const VehicleUsageStats = () => {
                   <td>{record.Vehicle ? record.Vehicle.VehicleType : '-'}</td>
                   <td>{record.Vehicle ? record.Vehicle.VehicleName : '-'}</td>
                   <td>{record.Vehicle ? record.Vehicle.RegistrationNo : '-'}</td>
-                  <td>{record.totalvisite || '-'}</td>
+                  <td>{record.CountVisite || '-'}</td>
                   <td>{record.Status || '-'}</td>
                   <td>{record.totalRevenue || '-'}</td>
                 </tr>

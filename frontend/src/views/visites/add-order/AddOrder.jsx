@@ -18,12 +18,31 @@ const AddVisite = () => {
     Remarque: '',
     TotalAmount: '',
     Status: '',
+    customArray: []
   })
+  const [newString, setNewString] = useState(''); // To store the new string to be added
 
   const [customerList, setCustomerList] = useState([]);
   const [vehiclesList, setVehiclesList] = useState([]);
   const navigate = useNavigate();
+  // Add the new string to the array
+  const handleAddString = () => {
+    if (newString) {
+      setInputData({
+        ...inputData,
+        customArray: [...inputData.customArray, newString],
+      });
+      setNewString(''); // Clear the input field after adding
+    }
+  };
 
+  // Remove a string from the array
+  const handleRemoveString = (e, index) => {
+    e.stopPropagation(); // Prevent event from bubbling to parent elements (e.g., form submit)
+
+    const newArray = inputData.customArray.filter((_, i) => i !== index);
+    setInputData({ ...inputData, customArray: newArray });
+  };
   useEffect(() => {
     fetchCustomerName();
     fetchVehicleName();
@@ -114,7 +133,11 @@ const AddVisite = () => {
   };
 
   const handleCancel = () => (navigate('/admin/basic/order-list'));
-
+  const handleInputChange = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setNewString(e.target.value);
+  };
   return (
     <div>
       <div className="top-label">
@@ -166,8 +189,8 @@ const AddVisite = () => {
                   required
                 >
                   <option value="">Select Vehicle Name</option>
-                  {vehiclesList.map((vehicle) => (
-                    <option key={vehicle.vehicleId} value={vehicle.VehicleName}>
+                  {vehiclesList.map((vehicle, i) => (
+                    <option key={i} value={vehicle.VehicleName}>
                       {vehicle.VehicleName}
                     </option>
                   ))}
@@ -220,9 +243,35 @@ const AddVisite = () => {
                   <option value="Active">Active</option>
                   <option value="Completed">Completed</option>
                   <option value="Pendiing">Pendiing</option>
-
+                  <option value="Cancled">Cancled</option>
                 </select>
               </div>
+              {console.log(inputData.Status)}
+
+              {inputData.Status == 'Cancled' &&
+                <div>
+                  {console.log(inputData.Status)}
+                  <h6>Add defaut to Visite</h6>
+                  <input
+                    type="text"
+                    value={newString}
+                    onChange={handleInputChange}
+                    placeholder="Enter string"
+                  />
+                  <button type="button" onClick={handleAddString}>+</button>
+
+                  <h4>Array of Strings:</h4>
+                  <ul>
+                    {inputData.customArray.map((item, index) => (
+                      <li key={index}>
+                        {item}{' '}
+                        <button type="button" onClick={(e) => handleRemoveString(e, index)}>Delete</button>
+                      </li>
+                    ))}
+                  </ul>
+
+                </div>
+              }
               <div className="input-box">
                 <div className="details-container">
                   <span className="details">observation</span>

@@ -212,7 +212,7 @@ const DashAnalytics = () => {
         <Col md={12} xl={6}>
           <Card>
             <Card.Header>
-              <h5>Orders</h5>
+              <h5>Visites</h5>
             </Card.Header>
             <Card.Body className="ps-4 pt-4 pb-0">
               <Chart {...chartConfig} />
@@ -328,12 +328,7 @@ const DashAnalytics = () => {
                         <CTableRow>
                           <CTableHeaderCell>Vehicle Name</CTableHeaderCell>
                           <CTableHeaderCell className="text-center">Vehicle No</CTableHeaderCell>
-                          <CTableHeaderCell>Total Hours Used</CTableHeaderCell>
-                          <CTableHeaderCell>Total Trips</CTableHeaderCell>
-                          <CTableHeaderCell>Total Distance Covered</CTableHeaderCell>
-                          <CTableHeaderCell>Total Revenue</CTableHeaderCell>
-                          <CTableHeaderCell>Expense Total</CTableHeaderCell>
-                          <CTableHeaderCell>Expense Type</CTableHeaderCell>
+
                           <CTableHeaderCell>Fuel Quantity</CTableHeaderCell>
                           <CTableHeaderCell>Total Paid</CTableHeaderCell>
                           <CTableHeaderCell>Remaining Balance</CTableHeaderCell>
@@ -347,35 +342,10 @@ const DashAnalytics = () => {
                               <CTableDataCell className="text-center">
                                 {item.Vehicle ? item.Vehicle.RegistrationNo : "-"}
                               </CTableDataCell>
-                              <CTableDataCell>{item.totalHoursUsed || "-"}</CTableDataCell>
-                              <CTableDataCell>{item.totalTrips || "-"}</CTableDataCell>
-                              <CTableDataCell>{item.totalDistanceCovered || "-"}</CTableDataCell>
-                              <CTableDataCell>{item.totalRevenue}</CTableDataCell>
-                              <CTableDataCell>{item.totalExpense || "-"}</CTableDataCell>
-                              <CTableDataCell>
-                                {item.expenseDetails && item.expenseDetails.length > 0 ? (
-                                  item.expenseDetails.map((expense, expIndex) => (
-                                    <span key={expIndex}>
-                                      {expense.ExpenseType || 0}
-                                      {expIndex !== item.expenseDetails.length - 1 ? ", " : ""}
-                                    </span>
-                                  ))
-                                ) : (
-                                  "-"
-                                )}
-                              </CTableDataCell>
-                              <CTableDataCell>
-                                {item.expenseDetails && item.expenseDetails.length > 0 ? (
-                                  item.expenseDetails.map((expense, expIndex) => (
-                                    <span key={expIndex}>
-                                      {expense.fuelQuantity || 0} liter
-                                      {expIndex !== item.expenseDetails.length - 1 ? ", " : ""}
-                                    </span>
-                                  ))
-                                ) : (
-                                  "-"
-                                )}
-                              </CTableDataCell>
+
+
+                              <CTableDataCell>{item.totalRevenue || 0}</CTableDataCell>
+
                               <CTableDataCell>{item.totalPaid || 0}</CTableDataCell>
                               <CTableDataCell>{item.remainingBalance || 0}</CTableDataCell>
                             </CTableRow>

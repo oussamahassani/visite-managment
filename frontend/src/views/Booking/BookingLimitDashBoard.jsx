@@ -119,7 +119,7 @@ function BookingLimitDashBoard() {
                                                             <td >{bookinglimit.Booking_Limit}</td>
                                                             <td >
                                                                 <div className='flex justify-center gap-x-4'>
-                                                                    <Link to={`/booking/updatelimit/${bookinglimit._id}`}>
+                                                                    <Link to={`/admin/booking/bookinglimitEdit/${bookinglimit.id}`}>
                                                                         <AiOutlineEdit className='text-2x1 text-yellow-600' />
                                                                     </Link>
 

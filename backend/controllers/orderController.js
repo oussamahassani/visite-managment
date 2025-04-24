@@ -2,7 +2,7 @@ const { Op } = require('sequelize');
 const Order = require('../models/Visite');
 const OrderPaymentsSummary = require('../models/OrderPaymentSummary');
 const Payment = require('../models/Payment');
-
+const DefautVisite = require("../models/defautVisit")
 exports.addOrder = async (req, res) => {
   const {
     CustomerID,
@@ -64,7 +64,11 @@ exports.addOrder = async (req, res) => {
       RemainingBalance: TotalAmount,
       Status: 'Pending',
     });
-
+    if (req.body.customArray && req.body.customArray.length > 0) {
+      for (let i = 0; i < req.body.customArray.length; i++) {
+        DefautVisite.create({ visiteID: order.OrderID, description: req.body.customArray[i], gravite: "grave" })
+      }
+    }
     res.status(201).json(order);
   } catch (error) {
     console.error('Error creating order:', error);
