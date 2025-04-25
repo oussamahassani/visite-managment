@@ -27,6 +27,12 @@ const menuItemsUser = {
                             type: 'item',
                             url: '/user/voiture'
                         },
+                        {
+                            id: 'badgess',
+                            title: 'Vehicle Details',
+                            type: 'item',
+                            url: '/user/voiture-details'
+                        },
 
                     ]
                 },

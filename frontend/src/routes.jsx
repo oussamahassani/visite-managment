@@ -464,6 +464,12 @@ export const routes = [
         element: <AddVehicle />
       },
       {
+        path: 'voiture-details',
+        element: <OverallDetails />
+      },
+
+
+      {
         path: 'addBooking',
         element: <CreateBooking />
       },
@@ -471,6 +477,7 @@ export const routes = [
         path: 'bookingList',
         element: <BookingDashBoard />
       },
+
       {
         path: '',
         element: <UserRedirect />

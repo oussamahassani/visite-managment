@@ -12,14 +12,21 @@ const VehicleUsageStats = () => {
   const [filterRecords, setFilterRecords] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(7);
+  const [role, setRole] = useState(localStorage.getItem("role"));
 
+  const [cusID, setcusID] = useState(localStorage.getItem("email"));
+  const [cussID, setcussID] = useState(localStorage.getItem("idcustomer"));
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const response = await axiosInstance.get('/count/vehicle/all-data?timeFilter=all');
+      let url = '/count/vehicle/all-data?timeFilter=all'
+      if (role !== "Admin") {
+        url = '/count/vehicle/user/' + cussID
+      }
+      const response = await axiosInstance.get(url);
       setData(response.data);
       setFilterRecords(response.data);
     } catch (error) {

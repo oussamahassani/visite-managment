@@ -90,7 +90,38 @@ exports.getFinancialSummary = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch financial summary' });
   }
 };
+exports.getVehicleUsageStatsBYuser = async (req, res) => {
+  const { id } = req.params;
+  const vehicleCount = await Order.findAll({
+    attributes: [
+      'VehicleID',
+      [sequelize.fn('COUNT', sequelize.col('VehicleID')), 'vehicleCount'] // 👈 Explicit table alias
 
+
+    ],
+    where: {},
+    group: ['VehicleID'],
+
+  });
+  const vehicleStats = await Order.findAll({ where: { CustomerID: id } })
+  const finalData = vehicleStats.map((vehicle) => {
+    const vehicleID = vehicle.VehicleID;
+
+
+    return {
+      ...vehicle.get({ plain: true }),
+      totalExpense: 0,
+      DefautDetails: [],
+      CountVisite: vehicleCount.filter(el => el['VehicleID'] == vehicleID),
+      totalPaid: 0,
+      remainingBalance: 0,
+      Status: vehicle.Status,
+    };
+
+  });
+  res.status(200).json(finalData);
+
+}
 exports.getVehicleUsageStats = async (req, res) => {
   try {
     const { timeFilter } = req.query;
